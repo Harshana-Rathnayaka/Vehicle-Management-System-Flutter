@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: 'Poppins'
       ),
       home: LoginPage(),
       debugShowCheckedModeBanner: false,

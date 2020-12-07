@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
             : Center(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                           Text(
                             'LOGIN',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
+                                fontWeight: FontWeight.bold, fontSize: 28),
                           ),
                           SvgPicture.asset(
                             login_image,
@@ -182,7 +182,10 @@ class _LoginPageState extends State<LoginPage> {
                               height: 45,
                               child: Text(
                                 'LOGIN',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500),
                               ),
                               alignment: Alignment.center,
                               padding:
@@ -202,7 +205,8 @@ class _LoginPageState extends State<LoginPage> {
                             children: [
                               Text(
                                 'Don\'t have an account?',
-                                style: TextStyle(color: Colors.teal),
+                                style:
+                                    TextStyle(color: Colors.teal, fontSize: 16),
                               ),
                               SizedBox(
                                 width: 5,
@@ -212,7 +216,8 @@ class _LoginPageState extends State<LoginPage> {
                                   'Sign up',
                                   style: TextStyle(
                                       color: Colors.teal,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
                                 ),
                               ),
                             ],

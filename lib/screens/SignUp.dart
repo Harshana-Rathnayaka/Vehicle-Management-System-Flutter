@@ -6,16 +6,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vehicle_management_system/constants/images.dart';
 import 'package:http/http.dart' as http;
 import 'package:vehicle_management_system/screens/AdminHome.dart';
-import 'package:vehicle_management_system/screens/SignUp.dart';
 import 'package:vehicle_management_system/screens/UserHome.dart';
 import 'package:vehicle_management_system/services/NetworkHelper.dart';
 
-class LoginPage extends StatefulWidget {
+class SignUp extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpState extends State<SignUp> {
   double width;
   double height;
   bool visible = false;
@@ -213,13 +212,6 @@ class _LoginPageState extends State<LoginPage> {
                                 width: 5,
                               ),
                               GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              SignUp()));
-                                },
                                 child: Text(
                                   'Sign up',
                                   style: TextStyle(

@@ -95,6 +95,7 @@ class _FuelSettingsState extends State<FuelSettings> {
                   padding: const EdgeInsets.all(10),
                   width: width,
                   child: Card(
+                    color: cardColor,
                     elevation: 15,
                     child: ListTile(
                       leading: Icon(Icons.credit_card, color: primaryColor),
@@ -114,6 +115,7 @@ class _FuelSettingsState extends State<FuelSettings> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   width: width,
                   child: Card(
+                    color: cardColor,
                     elevation: 15,
                     child: ListTile(
                       leading: Icon(Icons.credit_card, color: primaryColor),

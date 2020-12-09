@@ -3,8 +3,10 @@ import 'package:vehicle_management_system/constants/colors.dart';
 import 'package:vehicle_management_system/screens/FuelSettings.dart';
 
 class DashboardTiles extends StatefulWidget {
+  final String username;
   const DashboardTiles({
     Key key,
+    this.username
   }) : super(key: key);
 
   @override
@@ -32,7 +34,7 @@ class _DashboardTilesState extends State<DashboardTiles> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Welcome Harshana,',
+                  'Welcome ${widget.username},',
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w500,

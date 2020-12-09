@@ -6,6 +6,9 @@ import 'package:vehicle_management_system/widgets/ManagementOptions.dart';
 enum Page { dashboard, manage }
 
 class Dashboard extends StatefulWidget {
+  final String username;
+
+  Dashboard({this.username});
   @override
   _DashboardState createState() => _DashboardState();
 }
@@ -60,7 +63,7 @@ class _DashboardState extends State<Dashboard> {
   Widget _loadScreen(page) {
     switch (_selectedPage) {
       case Page.dashboard:
-        return DashboardTiles();
+        return DashboardTiles(username: widget.username);
         break;
       case Page.manage:
         return ManagementOptions();

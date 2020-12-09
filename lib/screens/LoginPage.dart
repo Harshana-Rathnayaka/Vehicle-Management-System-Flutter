@@ -132,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                Dashboard()));
+                                                Dashboard(username: res['username'],)));
                                   }
                                 });
                               }

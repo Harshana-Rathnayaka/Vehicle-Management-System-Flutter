@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vehicle_management_system/constants/colors.dart';
 
 // ignore: must_be_immutable
 class MyTextField extends StatefulWidget {
@@ -57,7 +58,7 @@ class _MyTextFieldState extends State<MyTextField> {
         validator: widget.validation,
         onChanged: widget.onChanged,
         maxLength: widget.maxLength,
-        cursorColor: Colors.teal,
+        cursorColor: primaryColor,
         controller: widget.controller,
         decoration: InputDecoration(
           suffixIcon: widget.isSecure
@@ -69,14 +70,14 @@ class _MyTextFieldState extends State<MyTextField> {
                   },
                   child: new Icon(
                     widget.isPassword ? Icons.visibility_off : Icons.visibility,
-                    color: Colors.teal,
+                    color: primaryColor,
                   ),
                 )
               : null,
           icon: widget.icon != null
               ? Icon(
                   widget.icon,
-                  color: Colors.teal,
+                  color: primaryColor,
                 )
               : null,
           hintText: widget.hint,

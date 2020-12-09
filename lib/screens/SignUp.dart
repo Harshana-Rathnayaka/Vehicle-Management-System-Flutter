@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vehicle_management_system/constants/colors.dart';
 import 'package:vehicle_management_system/constants/images.dart';
 import 'package:http/http.dart' as http;
 import 'package:vehicle_management_system/screens/LoginPage.dart';
@@ -66,6 +67,7 @@ class _SignUpState extends State<SignUp> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: backgroundColor,
         body: _loading
             ? Center(child: CircularProgressIndicator())
             : Center(
@@ -161,7 +163,7 @@ class _SignUpState extends State<SignUp> {
                             child: MyButton(
                               width: width,
                               text: 'SIGNUP',
-                              btnColor: Colors.teal,
+                              btnColor: primaryColor,
                               btnRadius: 20,
                             ),
                           ),
@@ -172,8 +174,8 @@ class _SignUpState extends State<SignUp> {
                             children: [
                               Text(
                                 'Already have an account?',
-                                style:
-                                    TextStyle(color: Colors.teal, fontSize: 16),
+                                style: TextStyle(
+                                    color: primaryColor, fontSize: 16),
                               ),
                               SizedBox(
                                 width: 5,
@@ -188,7 +190,7 @@ class _SignUpState extends State<SignUp> {
                                 child: Text(
                                   'Log in',
                                   style: TextStyle(
-                                      color: Colors.teal,
+                                      color: primaryColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16),
                                 ),

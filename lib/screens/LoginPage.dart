@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vehicle_management_system/constants/colors.dart';
 import 'package:vehicle_management_system/constants/images.dart';
 import 'package:http/http.dart' as http;
 import 'package:vehicle_management_system/screens/AdminHome.dart';
 import 'package:vehicle_management_system/screens/SignUp.dart';
-import 'package:vehicle_management_system/screens/UserHome.dart';
+import 'package:vehicle_management_system/screens/Dashboard.dart';
 import 'package:vehicle_management_system/services/NetworkHelper.dart';
 import 'package:vehicle_management_system/widgets/MyButton.dart';
 import 'package:vehicle_management_system/widgets/MyTextField.dart';
@@ -53,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: backgroundColor,
         body: _loading
             ? Center(child: CircularProgressIndicator())
             : Center(
@@ -130,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                UserHomePage()));
+                                                Dashboard()));
                                   }
                                 });
                               }
@@ -138,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: MyButton(
                               width: width,
                               text: 'LOGIN',
-                              btnColor: Colors.teal,
+                              btnColor: primaryColor,
                               btnRadius: 20,
                             ),
                           ),
@@ -150,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                               Text(
                                 'Don\'t have an account?',
                                 style:
-                                    TextStyle(color: Colors.teal, fontSize: 16),
+                                    TextStyle(color: primaryColor, fontSize: 16),
                               ),
                               SizedBox(
                                 width: 5,
@@ -166,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Text(
                                   'Sign up',
                                   style: TextStyle(
-                                      color: Colors.teal,
+                                      color: primaryColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16),
                                 ),
@@ -183,5 +185,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-

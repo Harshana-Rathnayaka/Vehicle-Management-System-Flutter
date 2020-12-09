@@ -9,6 +9,8 @@ import 'package:vehicle_management_system/screens/AdminHome.dart';
 import 'package:vehicle_management_system/screens/SignUp.dart';
 import 'package:vehicle_management_system/screens/UserHome.dart';
 import 'package:vehicle_management_system/services/NetworkHelper.dart';
+import 'package:vehicle_management_system/widgets/MyButton.dart';
+import 'package:vehicle_management_system/widgets/MyTextField.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -72,80 +74,35 @@ class _LoginPageState extends State<LoginPage> {
                             height: height * 0.35,
                           ),
                           SizedBox(height: 20),
-                          // username field
-                          Container(
-                            width: width * 0.85,
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
-                            decoration: BoxDecoration(
-                                color: Colors.teal[100],
-                                borderRadius: BorderRadius.circular(20)),
-                            child: TextFormField(
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return 'Please enter your username';
-                                }
-                                return null;
-                              },
-                              cursorColor: Colors.teal,
-                              controller: _usernameController,
-                              decoration: InputDecoration(
-                                icon: Icon(
-                                  Icons.person,
-                                  color: Colors.teal,
-                                ),
-                                hintText: 'Username',
-                                hintStyle:
-                                    TextStyle(color: Colors.blueGrey[700]),
-                                border: InputBorder.none,
-                              ),
-                            ),
+
+                          // username
+                          MyTextField(
+                            controller: _usernameController,
+                            hint: "Username",
+                            width: width,
+                            icon: Icons.person,
+                            validation: (val) {
+                              if (val.isEmpty) {
+                                return "Username is required";
+                              }
+                              return null;
+                            },
                           ),
 
-                          // password field
-                          Container(
-                            width: width * 0.85,
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
-                            decoration: BoxDecoration(
-                                color: Colors.teal[100],
-                                borderRadius: BorderRadius.circular(20)),
-                            child: TextFormField(
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return 'Please enter your password';
-                                }
-                                return null;
-                              },
-                              cursorColor: Colors.teal,
-                              controller: _passwordController,
-                              obscureText: visible ? false : true,
-                              decoration: InputDecoration(
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      visible = !visible;
-                                    });
-                                  },
-                                  child: Icon(
-                                    visible
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    color: Colors.teal,
-                                  ),
-                                ),
-                                icon: Icon(
-                                  Icons.lock,
-                                  color: Colors.teal,
-                                ),
-                                hintText: 'Password',
-                                hintStyle:
-                                    TextStyle(color: Colors.blueGrey[700]),
-                                border: InputBorder.none,
-                              ),
-                            ),
+                          // password
+                          MyTextField(
+                            controller: _passwordController,
+                            hint: "Password",
+                            width: width,
+                            isPassword: true,
+                            isSecure: true,
+                            icon: Icons.lock,
+                            validation: (val) {
+                              if (val.isEmpty) {
+                                return "Password is required";
+                              }
+                              return null;
+                            },
                           ),
 
                           // login button
@@ -178,25 +135,11 @@ class _LoginPageState extends State<LoginPage> {
                                 });
                               }
                             },
-                            child: Container(
-                              width: width * 0.85,
-                              height: 45,
-                              child: Text(
-                                'LOGIN',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              alignment: Alignment.center,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 20),
-                              decoration: BoxDecoration(
-                                color: Colors.teal,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
+                            child: MyButton(
+                              width: width,
+                              text: 'LOGIN',
+                              btnColor: Colors.teal,
+                              btnRadius: 20,
                             ),
                           ),
 
@@ -240,3 +183,5 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+

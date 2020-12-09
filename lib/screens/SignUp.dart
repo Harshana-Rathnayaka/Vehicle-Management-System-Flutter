@@ -7,6 +7,7 @@ import 'package:vehicle_management_system/constants/images.dart';
 import 'package:http/http.dart' as http;
 import 'package:vehicle_management_system/screens/LoginPage.dart';
 import 'package:vehicle_management_system/services/NetworkHelper.dart';
+import 'package:vehicle_management_system/widgets/MyButton.dart';
 import 'package:vehicle_management_system/widgets/MyTextField.dart';
 
 class SignUp extends StatefulWidget {
@@ -157,25 +158,11 @@ class _SignUpState extends State<SignUp> {
                                 });
                               }
                             },
-                            child: Container(
-                              width: width * 0.85,
-                              height: 45,
-                              child: Text(
-                                'SIGNUP',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              alignment: Alignment.center,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 20),
-                              decoration: BoxDecoration(
-                                color: Colors.teal,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
+                            child: MyButton(
+                              width: width,
+                              text: 'SIGNUP',
+                              btnColor: Colors.teal,
+                              btnRadius: 20,
                             ),
                           ),
 

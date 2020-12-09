@@ -82,7 +82,7 @@ class _SignUpState extends State<SignUp> {
                                 fontWeight: FontWeight.bold, fontSize: 28),
                           ),
                           SvgPicture.asset(
-                            login_image,
+                            signup_image,
                             height: width * 0.50,
                           ),
                           SizedBox(height: 20),

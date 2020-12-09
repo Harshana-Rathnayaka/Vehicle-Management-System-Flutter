@@ -23,11 +23,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  connectivity:
+  connectivity: null
   cupertino_icons: ^0.1.3
   flutter_svg: null
   fluttertoast: ^7.1.5
   http: ^0.12.2
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:
@@ -62,7 +63,6 @@ flutter:
         - asset: assets/fonts/Poppins-SemiBold.ttf
         - asset: assets/fonts/Poppins-Regular.ttf
         - asset: assets/fonts/Poppins-Medium.ttf
-
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

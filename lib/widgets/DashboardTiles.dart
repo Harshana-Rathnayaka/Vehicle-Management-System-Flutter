@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vehicle_management_system/constants/colors.dart';
+import 'package:vehicle_management_system/screens/FuelSettings.dart';
 
 class DashboardTiles extends StatefulWidget {
   const DashboardTiles({
@@ -63,6 +64,7 @@ class _DashboardTilesState extends State<DashboardTiles> {
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               children: <Widget>[
                 Card(
+                  margin: const EdgeInsets.all(10),
                   color: cardColor,
                   elevation: 5.0,
                   child: Padding(
@@ -81,27 +83,35 @@ class _DashboardTilesState extends State<DashboardTiles> {
                     ),
                   ),
                 ),
-                Card(
-                  color: cardColor,
-                  elevation: 5.0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(Icons.local_gas_station,
-                            size: 50, color: primaryColor),
-                        Text(
-                          'Fuel Rates',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
-                        )
-                      ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => FuelSettings()));
+                  },
+                  child: Card(
+                    margin: const EdgeInsets.all(10),
+                    color: cardColor,
+                    elevation: 5.0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(Icons.local_gas_station,
+                              size: 50, color: primaryColor),
+                          Text(
+                            'Fuel Rates',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 Card(
+                  margin: const EdgeInsets.all(10),
                   color: cardColor,
                   elevation: 5.0,
                   child: Padding(
@@ -121,6 +131,7 @@ class _DashboardTilesState extends State<DashboardTiles> {
                   ),
                 ),
                 Card(
+                  margin: const EdgeInsets.all(10),
                   color: cardColor,
                   elevation: 5.0,
                   child: Padding(
@@ -141,6 +152,7 @@ class _DashboardTilesState extends State<DashboardTiles> {
                   ),
                 ),
                 Card(
+                  margin: const EdgeInsets.all(10),
                   color: cardColor,
                   elevation: 5.0,
                   child: Padding(
@@ -161,6 +173,7 @@ class _DashboardTilesState extends State<DashboardTiles> {
                   ),
                 ),
                 Card(
+                  margin: const EdgeInsets.all(10),
                   color: cardColor,
                   elevation: 5.0,
                   child: Padding(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vehicle_management_system/screens/AddVehicle.dart';
 
 class ManagementOptions extends StatefulWidget {
   const ManagementOptions({
@@ -15,9 +16,12 @@ class _ManagementOptionsState extends State<ManagementOptions> {
     return ListView(
       children: <Widget>[
         ListTile(
-          leading: Icon(Icons.add),
-          title: Text("Add product"),
-          onTap: () {},
+          leading: Icon(Icons.directions_car),
+          title: Text("Add vehicle"),
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => AddVehicle()));
+          },
         ),
         Divider(),
         ListTile(

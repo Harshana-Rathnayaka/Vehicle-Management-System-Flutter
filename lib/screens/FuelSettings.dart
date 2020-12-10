@@ -30,7 +30,7 @@ class _FuelSettingsState extends State<FuelSettings> {
 
   @override
   void dispose() {
-    _priceController.text;
+    _priceController.dispose();
     super.dispose();
   }
 

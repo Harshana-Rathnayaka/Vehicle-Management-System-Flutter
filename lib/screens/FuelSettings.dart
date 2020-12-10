@@ -183,7 +183,6 @@ class _FuelSettingsState extends State<FuelSettings> {
                     child: MyTextField(
                       controller: _priceController,
                       hint: 'Enter the new price',
-                      width: width,
                       isNumber: true,
                       validation: (val) {
                         if (val.isEmpty) {

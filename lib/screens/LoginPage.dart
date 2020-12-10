@@ -81,7 +81,6 @@ class _LoginPageState extends State<LoginPage> {
                           MyTextField(
                             controller: _usernameController,
                             hint: "Username",
-                            width: width,
                             icon: Icons.person,
                             validation: (val) {
                               if (val.isEmpty) {
@@ -95,7 +94,6 @@ class _LoginPageState extends State<LoginPage> {
                           MyTextField(
                             controller: _passwordController,
                             hint: "Password",
-                            width: width,
                             isPassword: true,
                             isSecure: true,
                             icon: Icons.lock,
@@ -138,7 +136,6 @@ class _LoginPageState extends State<LoginPage> {
                               }
                             },
                             child: MyButton(
-                              width: width,
                               text: 'LOGIN',
                               btnColor: primaryColor,
                               btnRadius: 20,

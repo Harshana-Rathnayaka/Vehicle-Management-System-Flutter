@@ -94,7 +94,6 @@ class _SignUpState extends State<SignUp> {
                           MyTextField(
                             controller: _usernameController,
                             hint: "Username",
-                            width: width,
                             icon: Icons.person,
                             validation: (val) {
                               if (val.isEmpty) {
@@ -108,7 +107,6 @@ class _SignUpState extends State<SignUp> {
                           MyTextField(
                             controller: _emailController,
                             hint: "Email",
-                            width: width,
                             isEmail: true,
                             icon: Icons.email,
                             validation: (val) {
@@ -120,7 +118,6 @@ class _SignUpState extends State<SignUp> {
                           MyTextField(
                             controller: _passwordController,
                             hint: "Password",
-                            width: width,
                             isPassword: true,
                             isSecure: true,
                             icon: Icons.lock,
@@ -161,7 +158,6 @@ class _SignUpState extends State<SignUp> {
                               }
                             },
                             child: MyButton(
-                              width: width,
                               text: 'SIGNUP',
                               btnColor: primaryColor,
                               btnRadius: 20,

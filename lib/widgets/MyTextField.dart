@@ -3,7 +3,6 @@ import 'package:vehicle_management_system/constants/colors.dart';
 
 // ignore: must_be_immutable
 class MyTextField extends StatefulWidget {
-  final double width;
   final bool isSecure;
   var isPassword;
   final bool isEmail;
@@ -18,7 +17,7 @@ class MyTextField extends StatefulWidget {
   var onChanged;
 
   MyTextField(
-      {@required this.width,
+      {
       this.isPassword = false,
       this.isEmail = false,
       this.isNumber = false,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:vehicle_management_system/constants/colors.dart';
 import 'package:vehicle_management_system/screens/AllVehicles.dart';
 import 'package:vehicle_management_system/screens/FuelSettings.dart';
@@ -120,7 +121,7 @@ class _DashboardTilesState extends State<DashboardTiles> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Icon(Icons.settings, size: 50, color: primaryColor),
+                        Icon(MaterialCommunityIcons.wrench, size: 50, color: primaryColor),
                         Text(
                           'Repairs',
                           style: TextStyle(
@@ -166,7 +167,7 @@ class _DashboardTilesState extends State<DashboardTiles> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Icon(Icons.local_gas_station,
+                          Icon(MaterialCommunityIcons.train_car,
                               size: 50, color: primaryColor),
                           Text(
                             'Vehicles',
@@ -178,27 +179,27 @@ class _DashboardTilesState extends State<DashboardTiles> {
                     ),
                   ),
                 ),
-                Card(
-                  margin: const EdgeInsets.all(10),
-                  color: cardColor,
-                  elevation: 5.0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(Icons.local_gas_station,
-                            size: 50, color: primaryColor),
-                        Text(
-                          'Fuel Prices',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                // Card(
+                //   margin: const EdgeInsets.all(10),
+                //   color: cardColor,
+                //   elevation: 5.0,
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.center,
+                //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //       children: [
+                //         Icon(Icons.local_gas_station,
+                //             size: 50, color: primaryColor),
+                //         Text(
+                //           'Fuel Prices',
+                //           style: TextStyle(
+                //               fontSize: 16, fontWeight: FontWeight.w500),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

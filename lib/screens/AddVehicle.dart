@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vehicle_management_system/constants/colors.dart';
 import 'package:http/http.dart' as http;
@@ -96,7 +97,7 @@ class _AddVehicleState extends State<AddVehicle> {
                     children: [
                       MyTextField(
                         hint: 'Vehicle Number',
-                        icon: Icons.directions_car,
+                        icon: MaterialCommunityIcons.numeric,
                         controller: _vehicleNumberController,
                         validation: (val) {
                           if (val.isEmpty) {
@@ -113,7 +114,7 @@ class _AddVehicleState extends State<AddVehicle> {
                           dropdownColor: Colors.teal[100],
                           decoration: InputDecoration(
                               prefixIcon: Icon(
-                                Icons.local_taxi,
+                                MaterialCommunityIcons.train_car,
                                 color: primaryColor,
                               ),
                               filled: true,
@@ -174,7 +175,7 @@ class _AddVehicleState extends State<AddVehicle> {
                       ),
                       MyTextField(
                         hint: 'Capacity',
-                        icon: Icons.opacity,
+                        icon: MaterialCommunityIcons.gas_cylinder,
                         controller: _capacityController,
                         validation: (val) {
                           if (val.isEmpty) {
@@ -252,7 +253,7 @@ class _AddVehicleState extends State<AddVehicle> {
                       ),
                       MyTextField(
                         hint: 'Chasis Number',
-                        icon: Icons.build,
+                        icon: MaterialCommunityIcons.car_wash,
                         isNumber: true,
                         controller: _chassisNumberController,
                         validation: (val) {
@@ -264,7 +265,7 @@ class _AddVehicleState extends State<AddVehicle> {
                       ),
                       MyTextField(
                         hint: 'Engine Number',
-                        icon: Icons.business,
+                        icon: MaterialCommunityIcons.car_shift_pattern,
                         isNumber: true,
                         controller: _engineNumberController,
                         validation: (val) {

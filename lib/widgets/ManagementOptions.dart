@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:vehicle_management_system/screens/AddVehicle.dart';
 
 class ManagementOptions extends StatefulWidget {
@@ -16,7 +17,7 @@ class _ManagementOptionsState extends State<ManagementOptions> {
     return ListView(
       children: <Widget>[
         ListTile(
-          leading: Icon(Icons.directions_car),
+          leading: Icon(MaterialCommunityIcons.car_multiple),
           title: Text("Add vehicle"),
           onTap: () {
             Navigator.push(
@@ -25,14 +26,14 @@ class _ManagementOptionsState extends State<ManagementOptions> {
         ),
         Divider(),
         ListTile(
-          leading: Icon(Icons.change_history),
-          title: Text("Products list"),
+          leading: Icon(Icons.person_add),
+          title: Text("Add driver"),
           onTap: () {},
         ),
         Divider(),
         ListTile(
-          leading: Icon(Icons.add_circle),
-          title: Text("Add category"),
+          leading: Icon(MaterialIcons.build),
+          title: Text("New repair"),
           onTap: () {},
         ),
         Divider(),

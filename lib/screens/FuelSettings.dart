@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:vehicle_management_system/constants/colors.dart';
@@ -98,7 +99,7 @@ class _FuelSettingsState extends State<FuelSettings> {
                     color: cardColor,
                     elevation: 15,
                     child: ListTile(
-                      leading: Icon(Icons.credit_card, color: primaryColor),
+                      leading: Icon(MaterialCommunityIcons.fire, color: primaryColor),
                       title: Text('Petrol', style: TextStyle(fontSize: 18)),
                       subtitle: Text(
                           "Rs. ${currencyFormat.format(double.parse(_prices['petrolPrice']))}"),
@@ -118,7 +119,7 @@ class _FuelSettingsState extends State<FuelSettings> {
                     color: cardColor,
                     elevation: 15,
                     child: ListTile(
-                      leading: Icon(Icons.credit_card, color: primaryColor),
+                      leading: Icon(MaterialCommunityIcons.fire, color: primaryColor),
                       title: Text('Diesel', style: TextStyle(fontSize: 18)),
                       subtitle: Text(
                           "Rs. ${currencyFormat.format(double.parse(_prices['dieselPrice']))}"),

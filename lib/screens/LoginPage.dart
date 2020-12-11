@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: MyButton(
                               text: 'LOGIN',
                               btnColor: primaryColor,
-                              btnRadius: 20,
+                              btnRadius: 8,
                             ),
                           ),
 

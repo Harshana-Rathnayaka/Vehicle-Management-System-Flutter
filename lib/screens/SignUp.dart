@@ -160,7 +160,7 @@ class _SignUpState extends State<SignUp> {
                             child: MyButton(
                               text: 'SIGNUP',
                               btnColor: primaryColor,
-                              btnRadius: 20,
+                              btnRadius: 8,
                             ),
                           ),
 

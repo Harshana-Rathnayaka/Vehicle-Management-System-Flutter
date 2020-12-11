@@ -28,6 +28,13 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _passwordController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   Future<http.Response> _login() async {
     setState(() {
       _loading = true;
@@ -130,7 +137,9 @@ class _LoginPageState extends State<LoginPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                Dashboard(username: res['username'],)));
+                                                Dashboard(
+                                                  username: res['username'],
+                                                )));
                                   }
                                 });
                               }
@@ -148,8 +157,8 @@ class _LoginPageState extends State<LoginPage> {
                             children: [
                               Text(
                                 'Don\'t have an account?',
-                                style:
-                                    TextStyle(color: primaryColor, fontSize: 16),
+                                style: TextStyle(
+                                    color: primaryColor, fontSize: 16),
                               ),
                               SizedBox(
                                 width: 5,

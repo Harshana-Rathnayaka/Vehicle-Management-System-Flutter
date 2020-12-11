@@ -27,6 +27,14 @@ class _SignUpState extends State<SignUp> {
   TextEditingController _passwordController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   Future<http.Response> _register() async {
     setState(() {
       _loading = true;

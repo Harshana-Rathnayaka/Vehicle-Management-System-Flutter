@@ -29,7 +29,7 @@ class _AddVehicleState extends State<AddVehicle> {
 
   TextEditingController _vehicleNumberController = TextEditingController();
   TextEditingController _capacityController = TextEditingController();
-  TextEditingController _chasisNumberController = TextEditingController();
+  TextEditingController _chassisNumberController = TextEditingController();
   TextEditingController _engineNumberController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey();
 
@@ -42,9 +42,35 @@ class _AddVehicleState extends State<AddVehicle> {
   void dispose() {
     _vehicleNumberController.dispose();
     _capacityController.dispose();
-    _chasisNumberController.dispose();
+    _chassisNumberController.dispose();
     _engineNumberController.dispose();
     super.dispose();
+  }
+
+  // adding a new vehicle
+  Future<http.Response> _addVehicle() async {
+    setState(() {
+      _loading = true;
+    });
+
+    final http.Response response = await Network().postData({
+      'vehicleNumber': _vehicleNumberController.text,
+      'vehicleType': vehicleType,
+      'capacity': _capacityController.text,
+      'gasType': gasType,
+      'chassisNumber': _chassisNumberController.text,
+      'engineNumber': _engineNumberController.text,
+      'ownership': describeEnum(_ownership),
+      'maintenance': describeEnum(_maintenance)
+    }, '/addNewVehicle.php');
+
+    print('response ---- ${jsonDecode(response.body)}');
+
+    setState(() {
+      _loading = false;
+    });
+
+    return response;
   }
 
   @override
@@ -56,7 +82,7 @@ class _AddVehicleState extends State<AddVehicle> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: Text('Add new vehicle'),
+        title: Text('Add New Vehicle'),
       ),
       body: _loading
           ? Center(child: CircularProgressIndicator())
@@ -229,10 +255,10 @@ class _AddVehicleState extends State<AddVehicle> {
                         hint: 'Chasis Number',
                         icon: Icons.build,
                         isNumber: true,
-                        controller: _chasisNumberController,
+                        controller: _chassisNumberController,
                         validation: (val) {
                           if (val.isEmpty) {
-                            return 'Chasis Number is required';
+                            return 'Chasis number is required';
                           }
                           return null;
                         },
@@ -244,7 +270,7 @@ class _AddVehicleState extends State<AddVehicle> {
                         controller: _engineNumberController,
                         validation: (val) {
                           if (val.isEmpty) {
-                            return 'Engine Number is required';
+                            return 'Engine number is required';
                           }
                           return null;
                         },
@@ -348,8 +374,33 @@ class _AddVehicleState extends State<AddVehicle> {
                       GestureDetector(
                         onTap: () {
                           if (_formKey.currentState.validate()) {
-                            print('dfd');
-                            print(_maintenance);
+                            print(describeEnum(_ownership));
+                            print(describeEnum(_maintenance));
+
+                            _addVehicle().then((value) {
+                              var res = jsonDecode(value.body);
+
+                              if (res['error'] == true) {
+                                Fluttertoast.showToast(
+                                    msg: res['message'],
+                                    backgroundColor: Colors.red[600],
+                                    textColor: Colors.white,
+                                    toastLength: Toast.LENGTH_LONG);
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: res['message'],
+                                    backgroundColor: Colors.green,
+                                    textColor: Colors.white,
+                                    toastLength: Toast.LENGTH_LONG);
+
+                                setState(() {
+                                  _vehicleNumberController.clear();
+                                  _capacityController.clear();
+                                  _chassisNumberController.clear();
+                                  _engineNumberController.clear();
+                                });
+                              }
+                            });
                           }
                         },
                         child: MyButton(

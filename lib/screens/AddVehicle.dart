@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +9,9 @@ import 'package:http/http.dart' as http;
 import 'package:vehicle_management_system/services/NetworkHelper.dart';
 import 'package:vehicle_management_system/widgets/MyButton.dart';
 import 'package:vehicle_management_system/widgets/MyTextField.dart';
+
+enum Ownership { Own, Rent }
+enum Maintenance { Active, Inactive }
 
 class AddVehicle extends StatefulWidget {
   @override
@@ -18,8 +22,15 @@ class _AddVehicleState extends State<AddVehicle> {
   bool _loading = false;
   double width;
   double height;
+  var vehicleType = 'Car';
+  var gasType = 'Petrol';
+  Ownership _ownership = Ownership.Own;
+  Maintenance _maintenance = Maintenance.Active;
 
   TextEditingController _vehicleNumberController = TextEditingController();
+  TextEditingController _capacityController = TextEditingController();
+  TextEditingController _chasisNumberController = TextEditingController();
+  TextEditingController _engineNumberController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
@@ -29,30 +40,11 @@ class _AddVehicleState extends State<AddVehicle> {
 
   @override
   void dispose() {
-    _vehicleNumberController.text;
+    _vehicleNumberController.dispose();
+    _capacityController.dispose();
+    _chasisNumberController.dispose();
+    _engineNumberController.dispose();
     super.dispose();
-  }
-
-// format to display the prices
-  final currencyFormat = new NumberFormat("#,##0.00", "en_US");
-
-  // update the fuel price
-  Future<http.Response> _updatePrices(gasType) async {
-    setState(() {
-      _loading = true;
-    });
-
-    final http.Response response = await Network().postData(
-        {'gasType': gasType, 'price': _vehicleNumberController.text},
-        '/updateFuelPrices.php');
-
-    print('response ---- ${jsonDecode(response.body)}');
-
-    setState(() {
-      _loading = false;
-    });
-
-    return response;
   }
 
   @override
@@ -88,21 +80,77 @@ class _AddVehicleState extends State<AddVehicle> {
                           return null;
                         },
                       ),
-                      MyTextField(
-                        hint: 'Vehicle Type',
-                        icon: Icons.local_taxi,
-                        controller: _vehicleNumberController,
-                        validation: (val) {
-                          if (val.isEmpty) {
-                            return 'Vehicle type is required';
-                          }
-                          return null;
-                        },
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        child: DropdownButtonFormField(
+                          iconEnabledColor: primaryColor,
+                          dropdownColor: Colors.teal[100],
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.local_taxi,
+                                color: primaryColor,
+                              ),
+                              filled: true,
+                              fillColor: Colors.teal[100],
+                              labelText: 'Vehicle Type',
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(16, 10, 16, 10),
+                              hintStyle: TextStyle(color: Colors.blueGrey[700]),
+                              hintText: "Vehicle Type",
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: primaryColor, width: 1.1),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: primaryColor, width: 1.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: Colors.red, width: 1),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: Colors.red, width: 1),
+                              ),
+                              errorStyle: TextStyle()),
+                          isDense: true,
+                          iconSize: 30.0,
+                          value: vehicleType,
+                          style: TextStyle(color: Colors.black),
+                          items: ['Car', 'Van', 'Bike'].map(
+                            (val) {
+                              return DropdownMenuItem<String>(
+                                value: val,
+                                child: Text(val),
+                              );
+                            },
+                          ).toList(),
+                          onChanged: (val) {
+                            setState(
+                              () {
+                                vehicleType = val;
+                              },
+                            );
+                            print(vehicleType);
+                          },
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return 'Vehicle type is required';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
                       MyTextField(
                         hint: 'Capacity',
                         icon: Icons.opacity,
-                        controller: _vehicleNumberController,
+                        controller: _capacityController,
                         validation: (val) {
                           if (val.isEmpty) {
                             return 'Capacity is required';
@@ -110,22 +158,78 @@ class _AddVehicleState extends State<AddVehicle> {
                           return null;
                         },
                       ),
-                      MyTextField(
-                        hint: 'Fuel Type',
-                        icon: Icons.local_gas_station,
-                        controller: _vehicleNumberController,
-                        validation: (val) {
-                          if (val.isEmpty) {
-                            return 'Fuel type is required';
-                          }
-                          return null;
-                        },
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        child: DropdownButtonFormField(
+                          iconEnabledColor: primaryColor,
+                          dropdownColor: Colors.teal[100],
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.local_gas_station,
+                                color: primaryColor,
+                              ),
+                              filled: true,
+                              fillColor: Colors.teal[100],
+                              labelText: 'Fuel Type',
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(16, 10, 16, 10),
+                              hintStyle: TextStyle(color: Colors.blueGrey[700]),
+                              hintText: "Fuel Type",
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: primaryColor, width: 1.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: primaryColor, width: 1.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: Colors.red, width: 1),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: Colors.red, width: 1),
+                              ),
+                              errorStyle: TextStyle()),
+                          isDense: true,
+                          iconSize: 30.0,
+                          value: gasType,
+                          style: TextStyle(color: Colors.black),
+                          items: ['Petrol', 'Diesel'].map(
+                            (val) {
+                              return DropdownMenuItem<String>(
+                                value: val,
+                                child: Text(val),
+                              );
+                            },
+                          ).toList(),
+                          onChanged: (val) {
+                            setState(
+                              () {
+                                gasType = val;
+                              },
+                            );
+                            print(gasType);
+                          },
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return 'Fuel type is required';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
                       MyTextField(
                         hint: 'Chasis Number',
                         icon: Icons.build,
                         isNumber: true,
-                        controller: _vehicleNumberController,
+                        controller: _chasisNumberController,
                         validation: (val) {
                           if (val.isEmpty) {
                             return 'Chasis Number is required';
@@ -137,7 +241,7 @@ class _AddVehicleState extends State<AddVehicle> {
                         hint: 'Engine Number',
                         icon: Icons.business,
                         isNumber: true,
-                        controller: _vehicleNumberController,
+                        controller: _engineNumberController,
                         validation: (val) {
                           if (val.isEmpty) {
                             return 'Engine Number is required';
@@ -145,30 +249,114 @@ class _AddVehicleState extends State<AddVehicle> {
                           return null;
                         },
                       ),
-                      MyTextField(
-                        hint: 'Ownership',
-                        controller: _vehicleNumberController,
-                        validation: (val) {
-                          if (val.isEmpty) {
-                            return 'Vehicle type is required';
-                          }
-                          return null;
-                        },
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 26.0, vertical: 10.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Ownership'),
+                                  ListTile(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    visualDensity: VisualDensity(
+                                        horizontal: -4, vertical: -4),
+                                    title: Text('Own'),
+                                    leading: Radio(
+                                      value: Ownership.Own,
+                                      groupValue: _ownership,
+                                      onChanged: (Ownership value) {
+                                        setState(() {
+                                          _ownership = value;
+                                        });
+                                        print(describeEnum(_ownership));
+                                      },
+                                    ),
+                                  ),
+                                  ListTile(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    visualDensity: VisualDensity(
+                                        horizontal: -4, vertical: -4),
+                                    title: Text('Rent'),
+                                    leading: Radio(
+                                      value: Ownership.Rent,
+                                      groupValue: _ownership,
+                                      onChanged: (Ownership value) {
+                                        setState(() {
+                                          _ownership = value;
+                                        });
+                                        print(describeEnum(_ownership));
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Maintenance'),
+                                  ListTile(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    visualDensity: VisualDensity(
+                                        horizontal: -4, vertical: -4),
+                                    title: Text('Active'),
+                                    leading: Radio(
+                                      value: Maintenance.Active,
+                                      groupValue: _maintenance,
+                                      onChanged: (Maintenance value) {
+                                        setState(() {
+                                          _maintenance = value;
+                                        });
+                                        print(describeEnum(_maintenance));
+                                      },
+                                    ),
+                                  ),
+                                  ListTile(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    visualDensity: VisualDensity(
+                                        horizontal: -4, vertical: -4),
+                                    title: Text('Inactive'),
+                                    leading: Radio(
+                                      value: Maintenance.Inactive,
+                                      groupValue: _maintenance,
+                                      onChanged: (Maintenance value) {
+                                        setState(() {
+                                          _maintenance = value;
+                                        });
+                                        print(describeEnum(_maintenance));
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      MyTextField(
-                        hint: 'Maintenance',
-                        controller: _vehicleNumberController,
-                        validation: (val) {
-                          if (val.isEmpty) {
-                            return 'Vehicle type is required';
+                      GestureDetector(
+                        onTap: () {
+                          if (_formKey.currentState.validate()) {
+                            print('dfd');
+                            print(_maintenance);
                           }
-                          return null;
                         },
-                      ),
-                      MyButton(
-                        text: 'SAVE',
-                        btnColor: primaryColor,
-                        btnRadius: 20,
+                        child: MyButton(
+                          text: 'SAVE',
+                          btnColor: primaryColor,
+                          btnRadius: 8,
+                        ),
                       ),
                     ],
                   ),
@@ -176,114 +364,5 @@ class _AddVehicleState extends State<AddVehicle> {
               ),
             ),
     );
-  }
-
-// price updating dialog
-  Future<Widget> _updatePriceDialog(context, String gas, String price) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            backgroundColor: Colors.transparent,
-            child: Container(
-              height: 220,
-              decoration: BoxDecoration(
-                color: backgroundColor,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              width: double.infinity,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16.0),
-                          topRight: Radius.circular(16.0)),
-                    ),
-                    height: 50,
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    child: Text('Update the $gas price',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: Colors.white),
-                        textAlign: TextAlign.center),
-                  ),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  Form(
-                    key: _formKey,
-                    child: MyTextField(
-                      controller: _vehicleNumberController,
-                      hint: 'Enter the new price',
-                      isNumber: true,
-                      validation: (val) {
-                        if (val.isEmpty) {
-                          return 'The price is required to proceed.';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      if (_formKey.currentState.validate()) {
-                        _updatePrices(gas).then((value) {
-                          var res = jsonDecode(value.body);
-
-                          if (res['error'] == true) {
-                            Fluttertoast.showToast(
-                                    msg: res['message'],
-                                    backgroundColor: Colors.red[600],
-                                    textColor: Colors.white,
-                                    toastLength: Toast.LENGTH_LONG)
-                                .then((value) {
-                              Navigator.pop(context);
-                            });
-                          } else {
-                            setState(() {
-                              _vehicleNumberController.text = '';
-                            });
-                            Fluttertoast.showToast(
-                                    msg: res['message'],
-                                    backgroundColor: Colors.green,
-                                    textColor: Colors.white,
-                                    toastLength: Toast.LENGTH_LONG)
-                                .then((value) {
-                              Navigator.pop(context);
-                            });
-                          }
-                        });
-                      }
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 30.0,
-                      width: double.infinity,
-                      child: Text(
-                        'SAVE',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
   }
 }

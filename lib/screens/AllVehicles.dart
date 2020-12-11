@@ -71,7 +71,11 @@ class _AllVehiclesState extends State<AllVehicles> {
       body: _loading
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-              child: ListView.builder(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                _getVehicles();
+              },
+                          child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   itemCount: _vehicleList.length,
@@ -104,13 +108,15 @@ class _AllVehiclesState extends State<AllVehicles> {
                                               text: _vehicleList[index]
                                                   ['Vehicle_No'],
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.w800))
+                                                  fontWeight:
+                                                      FontWeight.w800))
                                         ]),
                                   ),
                                   Container(
                                     decoration: BoxDecoration(
-                                        color: Colors.blue[600],
-                                        borderRadius: BorderRadius.circular(4)),
+                                        color: Colors.blueGrey[800],
+                                        borderRadius:
+                                            BorderRadius.circular(4)),
                                     padding:
                                         const EdgeInsets.fromLTRB(8, 1, 8, 1),
                                     alignment: Alignment.center,
@@ -199,6 +205,7 @@ class _AllVehiclesState extends State<AllVehicles> {
                     );
                   }),
             ),
+          ),
     );
   }
 

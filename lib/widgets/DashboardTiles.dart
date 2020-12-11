@@ -50,7 +50,7 @@ class _DashboardTilesState extends State<DashboardTiles> {
                           fontWeight: FontWeight.w500,
                           color: Colors.green[800]),
                     ),
-                    Icon(Icons.emoji_emotions, color: Colors.green[800])
+                    Icon(Icons.tag_faces, color: Colors.green[800])
                   ],
                 ),
               ],
@@ -75,7 +75,7 @@ class _DashboardTilesState extends State<DashboardTiles> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Icon(Icons.people_alt, size: 50, color: primaryColor),
+                        Icon(Icons.people, size: 50, color: primaryColor),
                         Text(
                           'Drivers',
                           style: TextStyle(
@@ -122,7 +122,7 @@ class _DashboardTilesState extends State<DashboardTiles> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Icon(Icons.construction, size: 50, color: primaryColor),
+                        Icon(Icons.settings, size: 50, color: primaryColor),
                         Text(
                           'Repairs',
                           style: TextStyle(

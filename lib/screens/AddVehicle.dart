@@ -90,7 +90,7 @@ class _AddVehicleState extends State<AddVehicle> {
                       ),
                       MyTextField(
                         hint: 'Vehicle Type',
-                        icon: Icons.commute,
+                        icon: Icons.local_taxi,
                         controller: _vehicleNumberController,
                         validation: (val) {
                           if (val.isEmpty) {
@@ -123,7 +123,7 @@ class _AddVehicleState extends State<AddVehicle> {
                       ),
                       MyTextField(
                         hint: 'Chasis Number',
-                        icon: Icons.car_repair,
+                        icon: Icons.build,
                         isNumber: true,
                         controller: _vehicleNumberController,
                         validation: (val) {
@@ -135,7 +135,7 @@ class _AddVehicleState extends State<AddVehicle> {
                       ),
                       MyTextField(
                         hint: 'Engine Number',
-                        icon: Icons.engineering,
+                        icon: Icons.business,
                         isNumber: true,
                         controller: _vehicleNumberController,
                         validation: (val) {

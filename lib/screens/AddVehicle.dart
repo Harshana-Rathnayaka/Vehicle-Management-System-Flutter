@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 import 'package:vehicle_management_system/constants/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:vehicle_management_system/services/NetworkHelper.dart';

@@ -102,60 +102,69 @@ class _DriversState extends State<Drivers> {
       body: _loading
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemCount: _drivers.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Material(
-                        elevation: 10,
-                        child: Container(
-                          color: cardColor,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _drivers[index]['Name'],
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w700),
-                              ),
-                              SizedBox(height: 5),
-                              Table(
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                columnWidths: {
-                                  0: FractionColumnWidth(0.5),
-                                  1: FractionColumnWidth(0.5),
-                                },
+              child: Container(
+                height: height,
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    _getDrivers();
+                  },
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: _drivers.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Material(
+                            elevation: 10,
+                            child: Container(
+                              color: cardColor,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  TableRow(children: [
-                                    Text('License Number'),
-                                    Text(
-                                      ': ${_drivers[index]['Licen_No']}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ]),
-                                  TableRow(children: [
-                                    Text('Contact Number'),
-                                    Text(
-                                      ': ${_drivers[index]['Contact']}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ]),
+                                  Text(
+                                    _drivers[index]['Name'],
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Table(
+                                    defaultVerticalAlignment:
+                                        TableCellVerticalAlignment.middle,
+                                    columnWidths: {
+                                      0: FractionColumnWidth(0.5),
+                                      1: FractionColumnWidth(0.5),
+                                    },
+                                    children: [
+                                      TableRow(children: [
+                                        Text('License Number'),
+                                        Text(
+                                          ': ${_drivers[index]['Licen_No']}',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ]),
+                                      TableRow(children: [
+                                        Text('Contact Number'),
+                                        Text(
+                                          ': ${_drivers[index]['Contact']}',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ]),
+                                    ],
+                                  )
                                 ],
-                              )
-                            ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    );
-                  }),
+                        );
+                      }),
+                ),
+              ),
             ),
     );
   }

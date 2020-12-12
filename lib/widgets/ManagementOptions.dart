@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:vehicle_management_system/screens/AddVehicle.dart';
+import 'package:vehicle_management_system/screens/Drivers.dart';
 
 class ManagementOptions extends StatefulWidget {
   const ManagementOptions({
@@ -26,9 +27,12 @@ class _ManagementOptionsState extends State<ManagementOptions> {
         ),
         Divider(),
         ListTile(
-          leading: Icon(Icons.person_add),
-          title: Text("Add driver"),
-          onTap: () {},
+          leading: Icon(Icons.people),
+          title: Text("Drivers"),
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => Drivers()));
+          },
         ),
         Divider(),
         ListTile(

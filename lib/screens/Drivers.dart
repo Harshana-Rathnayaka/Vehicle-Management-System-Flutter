@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 import 'package:vehicle_management_system/constants/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:vehicle_management_system/services/NetworkHelper.dart';
@@ -20,7 +19,9 @@ class _DriversState extends State<Drivers> {
   double width;
   double height;
 
-  TextEditingController _priceController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _licenseController = TextEditingController();
+  TextEditingController _contactController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
@@ -31,11 +32,13 @@ class _DriversState extends State<Drivers> {
 
   @override
   void dispose() {
-    _priceController.dispose();
+    _nameController.dispose();
+    _licenseController.dispose();
+    _contactController.dispose();
     super.dispose();
   }
 
-// get the price list
+// get the drivers list
   Future<http.Response> _getDrivers() async {
     setState(() {
       _loading = true;
@@ -58,15 +61,17 @@ class _DriversState extends State<Drivers> {
     return response;
   }
 
-  // update the fuel price
-  Future<http.Response> _updatePrices(gasType) async {
+  // adding a new driver
+  Future<http.Response> _addDriver() async {
     setState(() {
       _loading = true;
     });
 
-    final http.Response response = await Network().postData(
-        {'gasType': gasType, 'price': _priceController.text},
-        '/updateFuelPrices.php');
+    final http.Response response = await Network().postData({
+      'name': _nameController.text,
+      'licenseNumber': _licenseController.text,
+      'contact': _contactController.text
+    }, '/addNewDriver.php');
 
     print('response ---- ${jsonDecode(response.body)}');
 
@@ -88,9 +93,10 @@ class _DriversState extends State<Drivers> {
         backgroundColor: primaryColor,
         title: Text('All Drivers'),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: null,
+        onPressed: () {
+          _addNewDriverDialog(context);
+        },
         child: Icon(Icons.person_add),
       ),
       body: _loading
@@ -154,8 +160,8 @@ class _DriversState extends State<Drivers> {
     );
   }
 
-// price updating dialog
-  Future<Widget> _updatePriceDialog(context, String gas, String price) {
+// adding new user dialog
+  Future<Widget> _addNewDriverDialog(context) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -165,7 +171,7 @@ class _DriversState extends State<Drivers> {
             ),
             backgroundColor: Colors.transparent,
             child: Container(
-              height: 220,
+              height: 370,
               decoration: BoxDecoration(
                 color: backgroundColor,
                 shape: BoxShape.rectangle,
@@ -180,77 +186,107 @@ class _DriversState extends State<Drivers> {
                       color: primaryColor,
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16.0),
-                          topRight: Radius.circular(16.0)),
+                        topLeft: Radius.circular(16.0),
+                        topRight: Radius.circular(16.0),
+                      ),
                     ),
-                    height: 50,
+                    height: 70,
                     width: double.infinity,
                     alignment: Alignment.center,
-                    child: Text('Update the $gas price',
+                    child: Text('Add New User',
                         style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
                             color: Colors.white),
                         textAlign: TextAlign.center),
                   ),
                   SizedBox(
-                    height: 15.0,
+                    height: 10.0,
                   ),
-                  Form(
-                    key: _formKey,
-                    child: MyTextField(
-                      controller: _priceController,
-                      hint: 'Enter the new price',
-                      isNumber: true,
-                      validation: (val) {
-                        if (val.isEmpty) {
-                          return 'The price is required to proceed.';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      if (_formKey.currentState.validate()) {
-                        _updatePrices(gas).then((value) {
-                          var res = jsonDecode(value.body);
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          MyTextField(
+                            hint: 'Full Name',
+                            icon: MaterialCommunityIcons.account,
+                            controller: _nameController,
+                            validation: (val) {
+                              if (val.isEmpty) {
+                                return 'Name is required';
+                              }
+                              return null;
+                            },
+                          ),
+                          MyTextField(
+                            hint: 'License Number',
+                            icon: MaterialCommunityIcons.card_text,
+                            controller: _licenseController,
+                            validation: (val) {
+                              if (val.isEmpty) {
+                                return 'License number is required';
+                              }
+                              return null;
+                            },
+                          ),
+                          MyTextField(
+                            maxLength: 10,
+                            hint: 'Contact Number',
+                            icon: MaterialCommunityIcons.contact_phone,
+                            isNumber: true,
+                            controller: _contactController,
+                            validation: (val) {
+                              if (val.isEmpty) {
+                                return 'Contact number is required';
+                              }
+                              return null;
+                            },
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (_formKey.currentState.validate()) {
+                                _addDriver().then((value) {
+                                  var res = jsonDecode(value.body);
 
-                          if (res['error'] == true) {
-                            Fluttertoast.showToast(
-                                    msg: res['message'],
-                                    backgroundColor: Colors.red[600],
-                                    textColor: Colors.white,
-                                    toastLength: Toast.LENGTH_LONG)
-                                .then((value) {
-                              Navigator.pop(context);
-                            });
-                          } else {
-                            setState(() {
-                              _priceController.text = '';
-                            });
-                            Fluttertoast.showToast(
-                                    msg: res['message'],
-                                    backgroundColor: Colors.green,
-                                    textColor: Colors.white,
-                                    toastLength: Toast.LENGTH_LONG)
-                                .then((value) {
-                              Navigator.pop(context);
-                              _getDrivers();
-                            });
-                          }
-                        });
-                      }
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 30.0,
-                      width: double.infinity,
-                      child: Text(
-                        'SAVE',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
+                                  if (res['error'] == true) {
+                                    Fluttertoast.showToast(
+                                        msg: res['message'],
+                                        backgroundColor: Colors.red[600],
+                                        textColor: Colors.white,
+                                        toastLength: Toast.LENGTH_LONG);
+                                  } else {
+                                    setState(() {
+                                      _nameController.clear();
+                                      _licenseController.clear();
+                                      _contactController.clear();
+                                    });
+                                    Fluttertoast.showToast(
+                                            msg: res['message'],
+                                            backgroundColor: Colors.green,
+                                            textColor: Colors.white,
+                                            toastLength: Toast.LENGTH_LONG)
+                                        .then((value) {
+                                      Navigator.pop(context);
+                                      _getDrivers();
+                                    });
+                                  }
+                                });
+                              }
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 30.0,
+                              width: double.infinity,
+                              child: Text(
+                                'SAVE',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

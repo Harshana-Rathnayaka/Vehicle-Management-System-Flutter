@@ -2,7 +2,8 @@ import 'package:connectivity/connectivity.dart';
 import 'package:http/http.dart' as http;
 
 class Network {
-  final String url = "http://192.168.8.100/vms/api";
+  // for real device
+  final String url = "http://0.0.0.0:8000/api";
 
   postData(values, endpoint) async {
     var fullUrl = url + endpoint;

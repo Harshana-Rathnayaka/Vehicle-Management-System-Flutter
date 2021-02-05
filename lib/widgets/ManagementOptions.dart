@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:vehicle_management_system/screens/AddRepair.dart';
 import 'package:vehicle_management_system/screens/AddVehicle.dart';
 import 'package:vehicle_management_system/screens/Drivers.dart';
 
@@ -38,7 +39,10 @@ class _ManagementOptionsState extends State<ManagementOptions> {
         ListTile(
           leading: Icon(MaterialIcons.build),
           title: Text("New repair"),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => AddRepair()));
+          },
         ),
         Divider(),
         ListTile(

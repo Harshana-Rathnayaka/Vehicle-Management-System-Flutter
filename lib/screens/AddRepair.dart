@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:vehicle_management_system/constants/colors.dart';
@@ -19,24 +20,27 @@ class _AddRepairState extends State<AddRepair> {
   bool _loading = false;
   double width;
   double height;
-  var vehicleType = 'Car';
-  var gasType = 'Petrol';
   DateTime _selectedDate;
   var _formattedDate;
+  List _vehicles;
+  var _selectedVehicle;
 
-  TextEditingController _vehicleNumberController = TextEditingController();
+  MoneyMaskedTextController _repairCostController = MoneyMaskedTextController(
+    initialValue: 0.00,
+    decimalSeparator: '.',
+    thousandSeparator: ',',
+  );
   TextEditingController _repairDetailsController = TextEditingController();
-  TextEditingController _repairCostController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
   void initState() {
+    _getVehicleNumbers();
     super.initState();
   }
 
   @override
   void dispose() {
-    _vehicleNumberController.dispose();
     _repairDetailsController.dispose();
     _repairCostController.dispose();
     super.dispose();
@@ -49,18 +53,41 @@ class _AddRepairState extends State<AddRepair> {
     });
 
     final http.Response response = await Network().postData({
-      'vehicleNumber': _vehicleNumberController.text,
-      'vehicleType': vehicleType,
-      'gasType': gasType,
+      'vehicleNumber': _selectedVehicle,
       'repairDetails': _repairDetailsController.text,
-      'repairCost': _repairCostController.text,
-    }, '/addNewVehicle.php');
+      'date': _formattedDate,
+      'repairCost': _repairCostController.numberValue.toString(),
+    }, '/addNewRepair.php');
 
     print('response ---- ${jsonDecode(response.body)}');
 
     setState(() {
       _loading = false;
     });
+
+    return response;
+  }
+
+  // get the vehicle number list list
+  Future<http.Response> _getVehicleNumbers() async {
+    setState(() {
+      _loading = true;
+    });
+
+    final http.Response response =
+        await Network().postData({'list_type': 'vehicles'}, '/getLists.php');
+
+    print('response ---- ${jsonDecode(response.body)}');
+
+    setState(() {
+      _loading = false;
+      var res = jsonDecode(response.body);
+      setState(() {
+        _vehicles = res['vehicleList'];
+      });
+    });
+
+    print(_vehicles);
 
     return response;
   }
@@ -74,7 +101,7 @@ class _AddRepairState extends State<AddRepair> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: Text('Add New Vehicle'),
+        title: Text('Repairs'),
       ),
       body: _loading
           ? Center(child: CircularProgressIndicator())
@@ -128,27 +155,27 @@ class _AddRepairState extends State<AddRepair> {
                               errorStyle: TextStyle()),
                           isDense: true,
                           iconSize: 30.0,
-                          value: vehicleType,
                           style: TextStyle(color: Colors.black),
-                          items: ['Car', 'Van', 'Bike'].map(
+                          value: _selectedVehicle,
+                          items: _vehicles.map(
                             (val) {
                               return DropdownMenuItem<String>(
-                                value: val,
-                                child: Text(val),
+                                value: val['Vehicle_No'],
+                                child: Text(val['Vehicle_No']),
                               );
                             },
                           ).toList(),
                           onChanged: (val) {
                             setState(
                               () {
-                                vehicleType = val;
+                                _selectedVehicle = val;
                               },
                             );
-                            print(vehicleType);
+                            print(_selectedVehicle);
                           },
                           validator: (val) {
                             if (val.isEmpty) {
-                              return 'Vehicle Number is required';
+                              return 'Select a Vehicle';
                             }
                             return null;
                           },
@@ -159,6 +186,7 @@ class _AddRepairState extends State<AddRepair> {
                         icon: MaterialIcons.build,
                         isMultiline: true,
                         maxLines: 6,
+                        maxLength: 500,
                         controller: _repairDetailsController,
                         validation: (val) {
                           if (val.isEmpty) {
@@ -167,21 +195,20 @@ class _AddRepairState extends State<AddRepair> {
                           return null;
                         },
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 10.0),
-                        // padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-
-                        height: 70.0,
-                        child: Stack(
-                          alignment: Alignment.bottomLeft,
-                          children: [
-                            Container(
-                              child: Container(
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
+                        child: Container(
+                          height: 70.0,
+                          child: Stack(
+                            alignment: Alignment.bottomLeft,
+                            children: [
+                              Container(
                                 padding: EdgeInsets.all(15),
                                 decoration: BoxDecoration(
                                     color: Colors.teal[100],
-                                    border: Border.all(color: primaryColor, width: 1.0),
+                                    border: Border.all(
+                                        color: primaryColor, width: 1.0),
                                     borderRadius: BorderRadius.circular(8.0)),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -194,7 +221,8 @@ class _AddRepairState extends State<AddRepair> {
                                               .format(_selectedDate)
                                           : "Date not selected",
                                       style: TextStyle(
-                                          fontSize: 16.0, color: Colors.blueGrey[700]),
+                                          fontSize: 16.0,
+                                          color: Colors.blueGrey[700]),
                                     ),
                                     GestureDetector(
                                       child: Icon(
@@ -234,26 +262,15 @@ class _AddRepairState extends State<AddRepair> {
                                   ],
                                 ),
                               ),
-                            ),
-                            // Positioned(
-                            //   top: 2.0,
-                            //   left: 10.0,
-                            //   child: Container(
-                            //     color: Colors.white,
-                            //     padding: EdgeInsets.all(5),
-                            //     child: Text(
-                            //       "Date",
-                            //       style: TextStyle(color: Colors.grey.shade600),
-                            //     ),
-                            //   ),
-                            // ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       MyTextField(
                         hint: 'Repair Cost',
-                        icon: MaterialCommunityIcons.car_shift_pattern,
+                        icon: Icons.monetization_on,
                         isNumber: true,
+                        maxLength: 10,
                         controller: _repairCostController,
                         validation: (val) {
                           if (val.isEmpty) {
@@ -282,9 +299,8 @@ class _AddRepairState extends State<AddRepair> {
                                     toastLength: Toast.LENGTH_LONG);
 
                                 setState(() {
-                                  _vehicleNumberController.clear();
                                   _repairDetailsController.clear();
-                                  _repairCostController.clear();
+                                  _repairCostController.updateValue(0.00);
                                 });
                               }
                             });

@@ -35,7 +35,8 @@ class _AllVehiclesState extends State<AllVehicles> {
       _loading = true;
     });
 
-    final http.Response response = await Network().getData('/getLists.php');
+    final http.Response response =
+        await Network().postData({'list_type': 'vehicles'}, '/getLists.php');
 
     print('response ---- ${jsonDecode(response.body)}');
 
@@ -221,114 +222,4 @@ class _AllVehiclesState extends State<AllVehicles> {
             ),
     );
   }
-
-// price updating dialog
-  // Future<Widget> _updatePriceDialog(context, String gas, String price) {
-  //   return showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return Dialog(
-  //           shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.circular(16),
-  //           ),
-  //           backgroundColor: Colors.transparent,
-  //           child: Container(
-  //             height: 220,
-  //             decoration: BoxDecoration(
-  //               color: backgroundColor,
-  //               shape: BoxShape.rectangle,
-  //               borderRadius: BorderRadius.circular(16),
-  //             ),
-  //             width: double.infinity,
-  //             child: Column(
-  //               mainAxisSize: MainAxisSize.min,
-  //               children: [
-  //                 Container(
-  //                   decoration: BoxDecoration(
-  //                     color: primaryColor,
-  //                     shape: BoxShape.rectangle,
-  //                     borderRadius: BorderRadius.only(
-  //                         topLeft: Radius.circular(16.0),
-  //                         topRight: Radius.circular(16.0)),
-  //                   ),
-  //                   height: 50,
-  //                   width: double.infinity,
-  //                   alignment: Alignment.center,
-  //                   child: Text('Update the $gas price',
-  //                       style: TextStyle(
-  //                           fontWeight: FontWeight.w400,
-  //                           fontSize: 16,
-  //                           color: Colors.white),
-  //                       textAlign: TextAlign.center),
-  //                 ),
-  //                 SizedBox(
-  //                   height: 15.0,
-  //                 ),
-  //                 Form(
-  //                   key: _formKey,
-  //                   child: MyTextField(
-  //                     controller: _priceController,
-  //                     hint: 'Enter the new price',
-  //                     isNumber: true,
-  //                     validation: (val) {
-  //                       if (val.isEmpty) {
-  //                         return 'The price is required to proceed.';
-  //                       }
-  //                       return null;
-  //                     },
-  //                   ),
-  //                 ),
-  //                 Spacer(),
-  //                 GestureDetector(
-  //                   onTap: () {
-  //                     if (_formKey.currentState.validate()) {
-  //                       _updatePrices(gas).then((value) {
-  //                         var res = jsonDecode(value.body);
-
-  //                         if (res['error'] == true) {
-  //                           Fluttertoast.showToast(
-  //                                   msg: res['message'],
-  //                                   backgroundColor: Colors.red[600],
-  //                                   textColor: Colors.white,
-  //                                   toastLength: Toast.LENGTH_LONG)
-  //                               .then((value) {
-  //                             Navigator.pop(context);
-  //                           });
-  //                         } else {
-  //                           setState(() {
-  //                             _priceController.text = '';
-  //                           });
-  //                           Fluttertoast.showToast(
-  //                                   msg: res['message'],
-  //                                   backgroundColor: Colors.green,
-  //                                   textColor: Colors.white,
-  //                                   toastLength: Toast.LENGTH_LONG)
-  //                               .then((value) {
-  //                             Navigator.pop(context);
-  //                             _getVehicles();
-  //                           });
-  //                         }
-  //                       });
-  //                     }
-  //                   },
-  //                   child: Container(
-  //                     alignment: Alignment.center,
-  //                     height: 30.0,
-  //                     width: double.infinity,
-  //                     child: Text(
-  //                       'SAVE',
-  //                       style: TextStyle(
-  //                           fontSize: 16, fontWeight: FontWeight.w500),
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 SizedBox(
-  //                   height: 20,
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         );
-  //       });
-  // }
 }

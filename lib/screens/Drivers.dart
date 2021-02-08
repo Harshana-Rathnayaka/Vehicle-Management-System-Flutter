@@ -44,7 +44,8 @@ class _DriversState extends State<Drivers> {
       _loading = true;
     });
 
-    final http.Response response = await Network().getData('/getLists.php');
+    final http.Response response =
+        await Network().postData({'list_type': 'drivers'}, '/getLists.php');
 
     print('response ---- ${jsonDecode(response.body)}');
 

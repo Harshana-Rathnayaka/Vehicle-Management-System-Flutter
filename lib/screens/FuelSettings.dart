@@ -44,7 +44,8 @@ class _FuelSettingsState extends State<FuelSettings> {
       _loading = true;
     });
 
-    final http.Response response = await Network().getData('/getLists.php');
+    final http.Response response =
+        await Network().postData({'list_type': 'gas'}, '/getLists.php');
 
     print('response ---- ${jsonDecode(response.body)}');
 
@@ -99,7 +100,8 @@ class _FuelSettingsState extends State<FuelSettings> {
                     color: cardColor,
                     elevation: 15,
                     child: ListTile(
-                      leading: Icon(MaterialCommunityIcons.fire, color: primaryColor),
+                      leading: Icon(MaterialCommunityIcons.fire,
+                          color: primaryColor),
                       title: Text('Petrol', style: TextStyle(fontSize: 18)),
                       subtitle: Text(
                           "Rs. ${currencyFormat.format(double.parse(_prices['petrolPrice']))}"),
@@ -119,7 +121,8 @@ class _FuelSettingsState extends State<FuelSettings> {
                     color: cardColor,
                     elevation: 15,
                     child: ListTile(
-                      leading: Icon(MaterialCommunityIcons.fire, color: primaryColor),
+                      leading: Icon(MaterialCommunityIcons.fire,
+                          color: primaryColor),
                       title: Text('Diesel', style: TextStyle(fontSize: 18)),
                       subtitle: Text(
                           "Rs. ${currencyFormat.format(double.parse(_prices['dieselPrice']))}"),
@@ -184,6 +187,7 @@ class _FuelSettingsState extends State<FuelSettings> {
                     child: MyTextField(
                       controller: _priceController,
                       hint: 'Enter the new price',
+                      maxLength: 3,
                       isNumber: true,
                       validation: (val) {
                         if (val.isEmpty) {

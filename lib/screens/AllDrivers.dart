@@ -8,12 +8,12 @@ import 'package:http/http.dart' as http;
 import 'package:vehicle_management_system/services/NetworkHelper.dart';
 import 'package:vehicle_management_system/widgets/MyTextField.dart';
 
-class Drivers extends StatefulWidget {
+class AllDrivers extends StatefulWidget {
   @override
-  _DriversState createState() => _DriversState();
+  _AllDriversState createState() => _AllDriversState();
 }
 
-class _DriversState extends State<Drivers> {
+class _AllDriversState extends State<AllDrivers> {
   bool _loading = false;
   List _drivers;
   double width;

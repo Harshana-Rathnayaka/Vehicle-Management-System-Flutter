@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:vehicle_management_system/constants/colors.dart';
 import 'package:vehicle_management_system/screens/AllVehicles.dart';
-import 'package:vehicle_management_system/screens/Drivers.dart';
+import 'package:vehicle_management_system/screens/AllDrivers.dart';
 import 'package:vehicle_management_system/screens/FuelSettings.dart';
 
 class DashboardTiles extends StatefulWidget {
@@ -68,7 +68,7 @@ class _DashboardTilesState extends State<DashboardTiles> {
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => Drivers()));
+                        context, MaterialPageRoute(builder: (_) => AllDrivers()));
                   },
                   child: Card(
                     margin: const EdgeInsets.all(10),

@@ -78,146 +78,149 @@ class _AllVehiclesState extends State<AllVehicles> {
                 onRefresh: () async {
                   _getVehicles();
                 },
-                child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: _vehicleList.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 10.0),
-                        child: Material(
-                          elevation: 10.0,
-                          child: Container(
+                child: _vehicleList != null && _vehicleList.length > 0
+                    ? ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: _vehicleList.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 10),
-                            color: cardColor,
-                            width: width,
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                horizontal: 10.0, vertical: 10.0),
+                            child: Material(
+                              elevation: 10.0,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                color: cardColor,
+                                width: width,
+                                child: Column(
                                   children: [
-                                    RichText(
-                                      text: TextSpan(
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500),
-                                          text: 'Vehicle No - ',
-                                          children: [
-                                            TextSpan(
-                                                text: _vehicleList[index]
-                                                    ['Vehicle_No'],
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.w800))
-                                          ]),
-                                    ),
-                                    Material(
-                                      borderRadius: BorderRadius.circular(4),
-                                      elevation: 8,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.blueGrey[800],
-                                            borderRadius:
-                                                BorderRadius.circular(4)),
-                                        padding: const EdgeInsets.fromLTRB(
-                                            8, 1, 8, 1),
-                                        alignment: Alignment.center,
-                                        child: Icon(
-                                            _vehicleList[index]
-                                                        ['Vehicle_Type'] ==
-                                                    'Car'
-                                                ? MaterialCommunityIcons.car
-                                                : _vehicleList[index]
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500),
+                                              text: 'Vehicle No - ',
+                                              children: [
+                                                TextSpan(
+                                                    text: _vehicleList[index]
+                                                        ['Vehicle_No'],
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w800))
+                                              ]),
+                                        ),
+                                        Material(
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                          elevation: 8,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.blueGrey[800],
+                                                borderRadius:
+                                                    BorderRadius.circular(4)),
+                                            padding: const EdgeInsets.fromLTRB(
+                                                8, 1, 8, 1),
+                                            alignment: Alignment.center,
+                                            child: Icon(
+                                                _vehicleList[index]
                                                             ['Vehicle_Type'] ==
-                                                        'Van'
-                                                    ? MaterialCommunityIcons
-                                                        .van_passenger
-                                                    : MaterialCommunityIcons
-                                                        .motorbike,
-                                            color: Colors.white),
-                                      ),
+                                                        'Car'
+                                                    ? MaterialCommunityIcons.car
+                                                    : _vehicleList[index][
+                                                                'Vehicle_Type'] ==
+                                                            'Van'
+                                                        ? MaterialCommunityIcons
+                                                            .van_passenger
+                                                        : MaterialCommunityIcons
+                                                            .motorbike,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      ],
                                     ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Table(
+                                      defaultVerticalAlignment:
+                                          TableCellVerticalAlignment.middle,
+                                      columnWidths: {
+                                        0: FractionColumnWidth(0.5),
+                                        1: FractionColumnWidth(0.5),
+                                      },
+                                      children: [
+                                        TableRow(children: [
+                                          Text('Capacity'),
+                                          Text(
+                                            ': ${_vehicleList[index]['Capacity']}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]),
+                                        TableRow(children: [
+                                          Text('Fuel Type'),
+                                          Text(
+                                            ': ${_vehicleList[index]['Fuel_Type']}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]),
+                                        TableRow(children: [
+                                          Text(
+                                            'Chassis Number',
+                                          ),
+                                          Text(
+                                            ': ${_vehicleList[index]['Chassis_Number']}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]),
+                                        TableRow(children: [
+                                          Text(
+                                            'Engine Number',
+                                          ),
+                                          Text(
+                                            ': ${_vehicleList[index]['Engine_Number']}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]),
+                                        TableRow(children: [
+                                          Text(
+                                            'Ownership',
+                                          ),
+                                          Text(
+                                            ': ${_vehicleList[index]['Ownership']}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]),
+                                        TableRow(children: [
+                                          Text(
+                                            'Maintenance',
+                                          ),
+                                          Text(
+                                            ': ${_vehicleList[index]['Maintenance']}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]),
+                                      ],
+                                    )
                                   ],
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Table(
-                                  defaultVerticalAlignment:
-                                      TableCellVerticalAlignment.middle,
-                                  columnWidths: {
-                                    0: FractionColumnWidth(0.5),
-                                    1: FractionColumnWidth(0.5),
-                                  },
-                                  children: [
-                                    TableRow(children: [
-                                      Text('Capacity'),
-                                      Text(
-                                        ': ${_vehicleList[index]['Capacity']}',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]),
-                                    TableRow(children: [
-                                      Text('Fuel Type'),
-                                      Text(
-                                        ': ${_vehicleList[index]['Fuel_Type']}',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]),
-                                    TableRow(children: [
-                                      Text(
-                                        'Chassis Number',
-                                      ),
-                                      Text(
-                                        ': ${_vehicleList[index]['Chassis_Number']}',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]),
-                                    TableRow(children: [
-                                      Text(
-                                        'Engine Number',
-                                      ),
-                                      Text(
-                                        ': ${_vehicleList[index]['Engine_Number']}',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]),
-                                    TableRow(children: [
-                                      Text(
-                                        'Ownership',
-                                      ),
-                                      Text(
-                                        ': ${_vehicleList[index]['Ownership']}',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]),
-                                    TableRow(children: [
-                                      Text(
-                                        'Maintenance',
-                                      ),
-                                      Text(
-                                        ': ${_vehicleList[index]['Maintenance']}',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]),
-                                  ],
-                                )
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    }),
+                          );
+                        })
+                    : Center(child: Text('No records found!')),
               ),
             ),
     );

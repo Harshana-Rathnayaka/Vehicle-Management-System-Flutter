@@ -102,75 +102,75 @@ class _AllDriversState extends State<AllDrivers> {
       ),
       body: _loading
           ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Container(
-                height: height,
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    _getDrivers();
-                  },
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: _drivers.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Material(
-                            elevation: 10,
-                            child: Container(
-                              color: cardColor,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    _drivers[index]['Name'],
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  SizedBox(height: 5),
-                                  Table(
-                                    defaultVerticalAlignment:
-                                        TableCellVerticalAlignment.middle,
-                                    columnWidths: {
-                                      0: FractionColumnWidth(0.5),
-                                      1: FractionColumnWidth(0.5),
-                                    },
-                                    children: [
-                                      TableRow(children: [
-                                        Text('License Number'),
-                                        Text(
-                                          ': ${_drivers[index]['Licen_No']}',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ]),
-                                      TableRow(children: [
-                                        Text('Contact Number'),
-                                        Text(
-                                          ': ${_drivers[index]['Contact']}',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ]),
-                                    ],
-                                  )
-                                ],
+          : Container(
+              height: height,
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  _getDrivers();
+                },
+                child: _drivers != null && _drivers.length > 0
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: _drivers.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Material(
+                              elevation: 10,
+                              child: Container(
+                                color: cardColor,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      _drivers[index]['Name'],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    SizedBox(height: 5),
+                                    Table(
+                                      defaultVerticalAlignment:
+                                          TableCellVerticalAlignment.middle,
+                                      columnWidths: {
+                                        0: FractionColumnWidth(0.5),
+                                        1: FractionColumnWidth(0.5),
+                                      },
+                                      children: [
+                                        TableRow(children: [
+                                          Text('License Number'),
+                                          Text(
+                                            ': ${_drivers[index]['Licen_No']}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]),
+                                        TableRow(children: [
+                                          Text('Contact Number'),
+                                          Text(
+                                            ': ${_drivers[index]['Contact']}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }),
-                ),
+                          );
+                        })
+                    : Center(child: Text('No records found!')),
               ),
             ),
     );
   }
 
-// adding new user dialog
+// adding new driver dialog
   Future<Widget> _addNewDriverDialog(context) {
     return showDialog(
         context: context,
@@ -203,7 +203,7 @@ class _AllDriversState extends State<AllDrivers> {
                     height: 70,
                     width: double.infinity,
                     alignment: Alignment.center,
-                    child: Text('Add New User',
+                    child: Text('Add Driver',
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 18,

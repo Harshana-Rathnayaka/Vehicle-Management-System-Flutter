@@ -68,10 +68,8 @@ class _AllRepairsState extends State<AllRepairs> {
         backgroundColor: primaryColor,
         title: Text('Repairs'),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text('New Repair'),
-        icon: Icon(MaterialCommunityIcons.plus),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(MaterialCommunityIcons.plus),
         onPressed: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (_) => AddRepair()));
@@ -85,75 +83,78 @@ class _AllRepairsState extends State<AllRepairs> {
                 onRefresh: () async {
                   _getRepairs();
                 },
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: _repairs.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Material(
-                          elevation: 10,
-                          child: Container(
-                            color: cardColor,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                child: _repairs != null && _repairs.length > 0
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: _repairs.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Material(
+                              elevation: 10,
+                              child: Container(
+                                color: cardColor,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      'Vehicle No : ',
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Vehicle No : ',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          _repairs[index]['Vehicle_No'],
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      _repairs[index]['Vehicle_No'],
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500),
+                                    SizedBox(height: 10),
+                                    Container(
+                                      child: Text(
+                                        _repairs[index]['Repair'],
+                                        textAlign: TextAlign.justify,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 4,
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Row(
+                                      children: [
+                                        Text('Date : '),
+                                        Text(
+                                          _repairs[index]['Date'],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text('Cost : '),
+                                        Text(
+                                          'Rs. ${currencyFormat.format(double.parse(_repairs[index]['Cost(Rs)']))}',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 10),
-                                Container(
-                                  child: Text(
-                                    _repairs[index]['Repair'],
-                                    textAlign: TextAlign.justify,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 4,
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Text('Date : '),
-                                    Text(
-                                      _repairs[index]['Date'],
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text('Cost : '),
-                                    Text(
-                                      'Rs. ${currencyFormat.format(double.parse(_repairs[index]['Cost(Rs)']))}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  ],
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    }),
+                          );
+                        })
+                    : Center(child: Text('No records found!')),
               ),
             ),
     );

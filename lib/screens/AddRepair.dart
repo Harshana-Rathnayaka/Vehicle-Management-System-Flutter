@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:vehicle_management_system/constants/colors.dart';
 import 'package:http/http.dart' as http;
+import 'package:vehicle_management_system/screens/AllRepairs.dart';
 import 'package:vehicle_management_system/services/NetworkHelper.dart';
 import 'package:vehicle_management_system/widgets/MyButton.dart';
 import 'package:vehicle_management_system/widgets/MyTextField.dart';
@@ -56,7 +57,7 @@ class _AddRepairState extends State<AddRepair> {
       'vehicleNumber': _selectedVehicle,
       'repairDetails': _repairDetailsController.text,
       'date': _formattedDate,
-      'repairCost': _repairCostController.numberValue.toString(),
+      'repairCost': _repairCostController.numberValue.toStringAsFixed(2),
     }, '/addNewRepair.php');
 
     print('response ---- ${jsonDecode(response.body)}');
@@ -101,7 +102,7 @@ class _AddRepairState extends State<AddRepair> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: Text('Repairs'),
+        title: Text('Add Repair'),
       ),
       body: _loading
           ? Center(child: CircularProgressIndicator())
@@ -302,6 +303,11 @@ class _AddRepairState extends State<AddRepair> {
                                   _repairDetailsController.clear();
                                   _repairCostController.updateValue(0.00);
                                 });
+
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => AllRepairs()));
                               }
                             });
                           }

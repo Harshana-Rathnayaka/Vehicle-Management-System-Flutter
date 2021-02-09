@@ -82,7 +82,7 @@ class _AddVehicleState extends State<AddVehicle> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: Text('Add New Vehicle'),
+        title: Text('Add Vehicle'),
       ),
       body: _loading
           ? Center(child: CircularProgressIndicator())

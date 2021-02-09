@@ -91,64 +91,71 @@ class _AllRepairsState extends State<AllRepairs> {
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: Material(
-                              elevation: 10,
-                              child: Container(
-                                color: cardColor,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Vehicle No : ',
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        Text(
-                                          _repairs[index]['Vehicle_No'],
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10),
-                                    Container(
-                                      child: Text(
-                                        _repairs[index]['Repair'],
-                                        textAlign: TextAlign.justify,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 4,
+                            child: GestureDetector(
+                              onTap: () {
+                                _viewDetails(context, _repairs[index]);
+                              },
+                              child: Material(
+                                elevation: 10,
+                                child: Container(
+                                  height: 160,
+                                  color: cardColor,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Vehicle No : ',
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            _repairs[index]['Vehicle_No'],
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Row(
-                                      children: [
-                                        Text('Date : '),
-                                        Text(
-                                          _repairs[index]['Date'],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text('Cost : '),
-                                        Text(
-                                          'Rs. ${currencyFormat.format(double.parse(_repairs[index]['Cost(Rs)']))}',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                        )
-                                      ],
-                                    ),
-                                  ],
+                                      SizedBox(height: 5),
+                                      Container(
+                                        child: Text(
+                                          _repairs[index]['Repair'],
+                                          textAlign: TextAlign.justify,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 4,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Row(
+                                        children: [
+                                          Text('Date : '),
+                                          Text(
+                                            _repairs[index]['Date'],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text('Cost : '),
+                                          Text(
+                                            'Rs. ${currencyFormat.format(double.parse(_repairs[index]['Cost(Rs)']))}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -158,5 +165,85 @@ class _AllRepairsState extends State<AllRepairs> {
               ),
             ),
     );
+  }
+
+// view repair details dialog
+  Future<Widget> _viewDetails(context, repair) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            backgroundColor: Colors.transparent,
+            child: Container(
+              height: 300,
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              width: double.infinity,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16.0),
+                        topRight: Radius.circular(16.0),
+                      ),
+                    ),
+                    height: 70,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Text('Repair Details',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                            color: Colors.white),
+                        textAlign: TextAlign.center),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Container(
+                    height: 160,
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Text(repair['Repair'], textAlign: TextAlign.justify),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 30.0,
+                      width: double.infinity,
+                      child: Text(
+                        'OK',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

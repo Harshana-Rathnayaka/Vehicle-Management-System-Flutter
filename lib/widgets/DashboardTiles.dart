@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:vehicle_management_system/constants/colors.dart';
+import 'package:vehicle_management_system/screens/AllRepairs.dart';
 import 'package:vehicle_management_system/screens/AllVehicles.dart';
 import 'package:vehicle_management_system/screens/AllDrivers.dart';
 import 'package:vehicle_management_system/screens/FuelSettings.dart';
@@ -67,8 +68,8 @@ class _DashboardTilesState extends State<DashboardTiles> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => AllDrivers()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => AllDrivers()));
                   },
                   child: Card(
                     margin: const EdgeInsets.all(10),
@@ -118,24 +119,30 @@ class _DashboardTilesState extends State<DashboardTiles> {
                     ),
                   ),
                 ),
-                Card(
-                  margin: const EdgeInsets.all(10),
-                  color: cardColor,
-                  elevation: 5.0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(MaterialCommunityIcons.wrench,
-                            size: 50, color: primaryColor),
-                        Text(
-                          'Repairs',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
-                        )
-                      ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => AllRepairs()));
+                  },
+                  child: Card(
+                    margin: const EdgeInsets.all(10),
+                    color: cardColor,
+                    elevation: 5.0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(MaterialCommunityIcons.wrench,
+                              size: 50, color: primaryColor),
+                          Text(
+                            'Repairs',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

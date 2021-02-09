@@ -20,7 +20,7 @@ class _ManagementOptionsState extends State<ManagementOptions> {
       children: <Widget>[
         ListTile(
           leading: Icon(MaterialCommunityIcons.car_multiple),
-          title: Text("Add vehicle"),
+          title: Text("New Vehicle"),
           onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (_) => AddVehicle()));
@@ -29,7 +29,7 @@ class _ManagementOptionsState extends State<ManagementOptions> {
         Divider(),
         ListTile(
           leading: Icon(Icons.people),
-          title: Text("Drivers"),
+          title: Text("New Driver"),
           onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (_) => AllDrivers()));
@@ -38,7 +38,7 @@ class _ManagementOptionsState extends State<ManagementOptions> {
         Divider(),
         ListTile(
           leading: Icon(MaterialIcons.build),
-          title: Text("New repair"),
+          title: Text("New Repair"),
           onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (_) => AddRepair()));
@@ -46,20 +46,8 @@ class _ManagementOptionsState extends State<ManagementOptions> {
         ),
         Divider(),
         ListTile(
-          leading: Icon(Icons.category),
-          title: Text("Category list"),
-          onTap: () {},
-        ),
-        Divider(),
-        ListTile(
-          leading: Icon(Icons.add_circle_outline),
-          title: Text("Add brand"),
-          onTap: () {},
-        ),
-        Divider(),
-        ListTile(
-          leading: Icon(Icons.library_books),
-          title: Text("brand list"),
+          leading: Icon(Icons.exit_to_app),
+          title: Text("Logout"),
           onTap: () {},
         ),
         Divider(),

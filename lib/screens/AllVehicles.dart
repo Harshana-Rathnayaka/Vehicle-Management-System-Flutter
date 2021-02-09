@@ -61,7 +61,7 @@ class _AllVehiclesState extends State<AllVehicles> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: Text('All Vehicles'),
+        title: Text('Vehicles'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

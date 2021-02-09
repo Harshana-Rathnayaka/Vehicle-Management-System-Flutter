@@ -92,7 +92,7 @@ class _AllDriversState extends State<AllDrivers> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: Text('All Drivers'),
+        title: Text('Drivers'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

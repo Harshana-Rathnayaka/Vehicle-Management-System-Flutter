@@ -87,7 +87,7 @@ class _FuelSettingsState extends State<FuelSettings> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: Text('Update Fuel Rates'),
+        title: Text('Fuel Rates'),
       ),
       body: _loading
           ? Center(child: CircularProgressIndicator())

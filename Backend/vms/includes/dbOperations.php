@@ -116,6 +116,22 @@ class DbOperations
         }
     }
 
+    // adding new fuel cost
+    public function createFuelCost($addedBy, $vehicleNumber, $date, $gasType, $fuelPrice, $fuelCost)
+    {
+
+        $stmt = $this->con->prepare("INSERT INTO `fuel_cost`(`ID`, `Add_By`, `Vehicle_No`, `Date`, `Fuel_Type`, `Fuel_Price`, `Cost`) VALUES (NULL, ?, ?, ?, ?, ?, ?);");
+        $stmt->bind_param("ssssss", $addedBy, $vehicleNumber, $date, $gasType, $fuelPrice, $fuelCost);
+
+        if ($stmt->execute()) {
+            // fuel cost created
+            return 0;
+        } else {
+            // some error
+            return 1;
+        }
+    }
+
     // marking the appointment as PAID by the user
     public function markAsPaid($appointment_id)
     {

@@ -5,6 +5,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:vehicle_management_system/constants/colors.dart';
 import 'package:http/http.dart' as http;
+import 'package:vehicle_management_system/screens/AddDailyCost.dart';
 import 'package:vehicle_management_system/services/NetworkHelper.dart';
 
 class DailyFuelCost extends StatefulWidget {
@@ -68,7 +69,10 @@ class _DailyFuelCostState extends State<DailyFuelCost> {
         title: Text('Daily Fuel Costs'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => AddDailyCost()));
+        },
         child: Icon(FlutterIcons.bank_plus_mco),
       ),
       body: _loading

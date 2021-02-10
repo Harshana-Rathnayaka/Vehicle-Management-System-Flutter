@@ -8,6 +8,7 @@ class MyTextField extends StatefulWidget {
   final bool isEmail;
   final bool isNumber;
   final bool isMultiline;
+  final bool isEnabled;
   final TextEditingController controller;
   final String hint;
   final maxLength;
@@ -17,12 +18,12 @@ class MyTextField extends StatefulWidget {
   var onChanged;
 
   MyTextField(
-      {
-      this.isPassword = false,
+      {this.isPassword = false,
       this.isEmail = false,
       this.isNumber = false,
       this.isMultiline = false,
       this.isSecure = false,
+      this.isEnabled = true,
       @required this.controller,
       this.hint = "",
       this.maxLength,
@@ -41,6 +42,7 @@ class _MyTextFieldState extends State<MyTextField> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       child: TextFormField(
+        enabled: widget.isEnabled,
         cursorColor: primaryColor,
         maxLines: widget.maxLines,
         validator: widget.validation,
@@ -81,6 +83,10 @@ class _MyTextFieldState extends State<MyTextField> {
           contentPadding: EdgeInsets.fromLTRB(16, 10, 16, 10),
           hintText: widget.hint,
           hintStyle: TextStyle(color: Colors.blueGrey[700]),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Colors.grey[500], width: 1.0),
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: primaryColor, width: 1.0),
@@ -100,52 +106,5 @@ class _MyTextFieldState extends State<MyTextField> {
         ),
       ),
     );
-    // return Container(
-    //   width: widget.width * 0.85,
-    //   padding: const EdgeInsets.symmetric(horizontal: 20),
-    //   margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-    //   decoration: BoxDecoration(
-    //       color: Colors.teal[100], borderRadius: BorderRadius.circular(20)),
-    //   child: TextFormField(
-    //     maxLines: widget.maxLines,
-    //     obscureText: widget.isPassword,
-    //     keyboardType: widget.isEmail
-    //         ? TextInputType.emailAddress
-    //         : widget.isNumber
-    //             ? TextInputType.number
-    //             : widget.isMultiline
-    //                 ? TextInputType.multiline
-    //                 : TextInputType.text,
-    //     validator: widget.validation,
-    //     onChanged: widget.onChanged,
-    //     maxLength: widget.maxLength,
-    //     cursorColor: primaryColor,
-    //     controller: widget.controller,
-    //     decoration: InputDecoration(
-    //       suffixIcon: widget.isSecure
-    //           ? GestureDetector(
-    //               onTap: () {
-    //                 setState(() {
-    //                   widget.isPassword = !widget.isPassword;
-    //                 });
-    //               },
-    //               child: new Icon(
-    //                 widget.isPassword ? Icons.visibility_off : Icons.visibility,
-    //                 color: primaryColor,
-    //               ),
-    //             )
-    //           : null,
-    //       icon: widget.icon != null
-    //           ? Icon(
-    //               widget.icon,
-    //               color: primaryColor,
-    //             )
-    //           : null,
-    //       hintText: widget.hint,
-    //       hintStyle: TextStyle(color: Colors.blueGrey[700]),
-    //       border: InputBorder.none,
-    //     ),
-    //   ),
-    // );
   }
 }

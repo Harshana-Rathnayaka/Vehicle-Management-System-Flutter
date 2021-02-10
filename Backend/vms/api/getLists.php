@@ -56,6 +56,18 @@ if (isset($_POST['list_type'])) {
         } else {
             $response['repairsList'] = [];
         }
+    } elseif ($list_type == 'daily_fuel_cost') {
+        // daily fuel cost table
+        $fuel_costs = $db->getDailyFuelCosts();
+        $fuelCostsList = array();
+        if ($fuel_costs->num_rows > 0) {
+            while ($row = $fuel_costs->fetch_assoc()) {
+                $fuelCostsList[] = $row;
+                $response['fuelCostsList'] = $fuelCostsList;
+            }
+        } else {
+            $response['fuelCostsList'] = [];
+        }
     }
 }
 

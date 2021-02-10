@@ -230,6 +230,14 @@ class DbOperations
         return $stmt->get_result();
     }
 
+    // retrieving daily fuel costs table
+    public function getDailyFuelCosts()
+    {
+        $stmt = $this->con->prepare("SELECT * FROM `fuel_cost` ORDER BY `Date` DESC");
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
     // retrieving the settings table
     public function getGasPrices()
     {
@@ -238,7 +246,6 @@ class DbOperations
         return $stmt->get_result();
     }
 
-    
     // getting the payable appointments table to the user
     public function getPayableAppointmentsByUser($user_id)
     {

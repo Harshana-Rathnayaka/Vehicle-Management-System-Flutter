@@ -4,6 +4,7 @@ import 'package:vehicle_management_system/constants/colors.dart';
 import 'package:vehicle_management_system/screens/AllRepairs.dart';
 import 'package:vehicle_management_system/screens/AllVehicles.dart';
 import 'package:vehicle_management_system/screens/AllDrivers.dart';
+import 'package:vehicle_management_system/screens/DailyFuelCost.dart';
 import 'package:vehicle_management_system/screens/FuelSettings.dart';
 
 class DashboardTiles extends StatefulWidget {
@@ -146,24 +147,30 @@ class _DashboardTilesState extends State<DashboardTiles> {
                     ),
                   ),
                 ),
-                Card(
-                  margin: const EdgeInsets.all(10),
-                  color: cardColor,
-                  elevation: 5.0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(Icons.monetization_on,
-                            size: 50, color: primaryColor),
-                        Text(
-                          'Fuel Cost',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
-                        )
-                      ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => DailyFuelCost()));
+                  },
+                  child: Card(
+                    margin: const EdgeInsets.all(10),
+                    color: cardColor,
+                    elevation: 5.0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(Icons.monetization_on,
+                              size: 50, color: primaryColor),
+                          Text(
+                            'Fuel Cost',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

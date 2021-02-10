@@ -201,27 +201,27 @@ class _DashboardTilesState extends State<DashboardTiles> {
                     ),
                   ),
                 ),
-                // Card(
-                //   margin: const EdgeInsets.all(10),
-                //   color: cardColor,
-                //   elevation: 5.0,
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(8.0),
-                //     child: Column(
-                //       crossAxisAlignment: CrossAxisAlignment.center,
-                //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //       children: [
-                //         Icon(Icons.local_gas_station,
-                //             size: 50, color: primaryColor),
-                //         Text(
-                //           'Fuel Prices',
-                //           style: TextStyle(
-                //               fontSize: 16, fontWeight: FontWeight.w500),
-                //         )
-                //       ],
-                //     ),
-                //   ),
-                // ),
+                Card(
+                  margin: const EdgeInsets.all(10),
+                  color: cardColor,
+                  elevation: 5.0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Icon(Icons.insert_chart,
+                            size: 50, color: primaryColor),
+                        Text(
+                          'Monthly Cost',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

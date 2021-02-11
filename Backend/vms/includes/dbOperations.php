@@ -270,6 +270,14 @@ class DbOperations
         return $stmt->get_result();
     }
 
+    // retrieving monthly fuel costs table
+    public function getMonthlyFuelCosts()
+    {
+        $stmt = $this->con->prepare("SELECT * FROM `monthly_countdown` ORDER BY `Date` ASC");
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
     // retrieving the settings table
     public function getGasPrices()
     {

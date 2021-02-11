@@ -68,6 +68,18 @@ if (isset($_POST['list_type'])) {
         } else {
             $response['fuelCostsList'] = [];
         }
+    } elseif ($list_type == 'monthly_fuel_cost') {
+        // monthly fuel cost table
+        $fuel_costs = $db->getMonthlyFuelCosts();
+        $fuelCostsList = array();
+        if ($fuel_costs->num_rows > 0) {
+            while ($row = $fuel_costs->fetch_assoc()) {
+                $fuelCostsList[] = $row;
+                $response['fuelCostsList'] = $fuelCostsList;
+            }
+        } else {
+            $response['fuelCostsList'] = [];
+        }
     }
 }
 

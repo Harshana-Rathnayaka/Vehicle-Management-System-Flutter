@@ -26,7 +26,6 @@ class _AddDailyCostState extends State<AddDailyCost> {
   List _vehicles;
   var _selectedVehicle;
   var addBy = 'Lakshitha';
-  var gasType = 'Petrol';
   Map _fuelPrices;
 
   // format to display the prices
@@ -37,6 +36,7 @@ class _AddDailyCostState extends State<AddDailyCost> {
     decimalSeparator: '.',
     thousandSeparator: ',',
   );
+  TextEditingController _fuelTypeController = TextEditingController();
   TextEditingController _fuelPriceController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey();
 
@@ -54,6 +54,7 @@ class _AddDailyCostState extends State<AddDailyCost> {
 
   @override
   void dispose() {
+    _fuelTypeController.dispose();
     _fuelPriceController.dispose();
     _fuelCostController.dispose();
     super.dispose();
@@ -69,7 +70,7 @@ class _AddDailyCostState extends State<AddDailyCost> {
       'addedBy': addBy,
       'vehicleNumber': _selectedVehicle,
       'date': _formattedDate,
-      'gasType': gasType,
+      'gasType': _fuelTypeController.text,
       'fuelPrice': _fuelPriceController.text,
       'fuelCost': _fuelCostController.numberValue.toStringAsFixed(2),
     }, '/addNewDailyFuelCost.php');
@@ -263,6 +264,21 @@ class _AddDailyCostState extends State<AddDailyCost> {
                           items: _vehicles.map(
                             (val) {
                               return DropdownMenuItem<String>(
+                                onTap: () {
+                                  setState(() {
+                                    _fuelTypeController.text = val['Fuel_Type'];
+                                    print(_fuelTypeController.text.toString());
+                                    if (_fuelTypeController.text == 'Petrol') {
+                                      _fuelPriceController.text =
+                                          currencyFormat.format(double.parse(
+                                              _fuelPrices['petrolPrice']));
+                                    } else {
+                                      _fuelPriceController.text =
+                                          currencyFormat.format(double.parse(
+                                              _fuelPrices['dieselPrice']));
+                                    }
+                                  });
+                                },
                                 value: val['Vehicle_No'],
                                 child: Text(val['Vehicle_No']),
                               );
@@ -355,91 +371,49 @@ class _AddDailyCostState extends State<AddDailyCost> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 10.0),
-                        child: DropdownButtonFormField(
-                          iconEnabledColor: primaryColor,
-                          dropdownColor: Colors.teal[100],
-                          decoration: InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.local_gas_station,
-                                color: primaryColor,
-                              ),
-                              filled: true,
-                              fillColor: Colors.teal[100],
-                              labelText: 'Fuel Type',
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(16, 10, 16, 10),
-                              hintStyle: TextStyle(color: Colors.blueGrey[700]),
-                              hintText: "Fuel Type",
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: primaryColor, width: 1.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: primaryColor, width: 1.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: Colors.red, width: 1),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: Colors.red, width: 1),
-                              ),
-                              errorStyle: TextStyle()),
-                          isDense: true,
-                          iconSize: 30.0,
-                          value: gasType,
-                          style: TextStyle(color: Colors.black),
-                          items: ['Petrol', 'Diesel'].map(
-                            (val) {
-                              return DropdownMenuItem<String>(
-                                value: val,
-                                child: Text(val),
-                              );
-                            },
-                          ).toList(),
-                          onChanged: (val) {
-                            setState(() {
-                              gasType = val;
-                            });
-                            print(gasType);
-
-                            if (gasType == 'Petrol') {
-                              _fuelPriceController.text = currencyFormat.format(
-                                  double.parse(_fuelPrices['petrolPrice']));
-                            } else {
-                              _fuelPriceController.text = currencyFormat.format(
-                                  double.parse(_fuelPrices['dieselPrice']));
-                            }
-                          },
-                          validator: (val) {
+                      GestureDetector(
+                        onTap: () {
+                          Fluttertoast.showToast(
+                              msg: 'This field is disabled',
+                              backgroundColor: Colors.blueGrey,
+                              textColor: Colors.white,
+                              toastLength: Toast.LENGTH_SHORT);
+                        },
+                        child: MyTextField(
+                          hint: 'Fuel Type',
+                          icon: Icons.local_gas_station,
+                          isNumber: true,
+                          isEnabled: false,
+                          controller: _fuelTypeController,
+                          validation: (val) {
                             if (val.isEmpty) {
-                              return 'Fuel type is required';
+                              return 'Fuel Type is required';
                             }
                             return null;
                           },
                         ),
                       ),
-                      MyTextField(
-                        hint: 'Fuel Price',
-                        icon: FlutterIcons.fuel_mco,
-                        isNumber: true,
-                        isEnabled: false,
-                        controller: _fuelPriceController,
-                        validation: (val) {
-                          if (val.isEmpty) {
-                            return 'Fuel Price is required';
-                          }
-                          return null;
+                      GestureDetector(
+                        onTap: () {
+                          Fluttertoast.showToast(
+                              msg: 'This field is disabled',
+                              backgroundColor: Colors.blueGrey,
+                              textColor: Colors.white,
+                              toastLength: Toast.LENGTH_SHORT);
                         },
+                        child: MyTextField(
+                          hint: 'Fuel Price',
+                          icon: FlutterIcons.cash_mco,
+                          isNumber: true,
+                          isEnabled: false,
+                          controller: _fuelPriceController,
+                          validation: (val) {
+                            if (val.isEmpty) {
+                              return 'Fuel Price is required';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
                       MyTextField(
                         hint: 'Cost',

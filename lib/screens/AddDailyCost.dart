@@ -59,7 +59,7 @@ class _AddDailyCostState extends State<AddDailyCost> {
     super.dispose();
   }
 
-  // adding a new fuel cost
+  // adding a new daily fuel cost
   Future<http.Response> _addFuelCost() async {
     setState(() {
       _loading = true;
@@ -72,7 +72,7 @@ class _AddDailyCostState extends State<AddDailyCost> {
       'gasType': gasType,
       'fuelPrice': _fuelPriceController.text,
       'fuelCost': _fuelCostController.numberValue.toStringAsFixed(2),
-    }, '/addNewFuelCost.php');
+    }, '/addNewDailyFuelCost.php');
 
     print('response ---- ${jsonDecode(response.body)}');
 

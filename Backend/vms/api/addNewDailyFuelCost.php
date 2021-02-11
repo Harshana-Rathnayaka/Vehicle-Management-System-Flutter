@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // db instance
         $db = new DbOperations();
 
-        // inserting to the vehicles table
-        $result = $db->createFuelCost($addedBy, $vehicleNumber, $date, $gasType, $fuelPrice, $fuelCost);
+        // inserting to the fuel_cost table
+        $result = $db->createDailyFuelCost($addedBy, $vehicleNumber, $date, $gasType, $fuelPrice, $fuelCost);
 
         if ($result == 0) {
 

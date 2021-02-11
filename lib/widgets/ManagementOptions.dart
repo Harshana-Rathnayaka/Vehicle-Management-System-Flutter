@@ -5,6 +5,7 @@ import 'package:vehicle_management_system/screens/AddMonthlyCost.dart';
 import 'package:vehicle_management_system/screens/AddRepair.dart';
 import 'package:vehicle_management_system/screens/AddVehicle.dart';
 import 'package:vehicle_management_system/screens/AllDrivers.dart';
+import 'package:vehicle_management_system/screens/LoginPage.dart';
 
 class ManagementOptions extends StatefulWidget {
   const ManagementOptions({
@@ -68,7 +69,10 @@ class _ManagementOptionsState extends State<ManagementOptions> {
         ListTile(
           leading: Icon(Icons.exit_to_app),
           title: Text("Logout"),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (_) => LoginPage()));
+          },
         ),
         Divider(),
       ],

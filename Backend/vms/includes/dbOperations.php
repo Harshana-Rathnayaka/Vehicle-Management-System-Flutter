@@ -116,12 +116,28 @@ class DbOperations
         }
     }
 
-    // adding new fuel cost
-    public function createFuelCost($addedBy, $vehicleNumber, $date, $gasType, $fuelPrice, $fuelCost)
+    // adding new daily fuel cost
+    public function createDailyFuelCost($addedBy, $vehicleNumber, $date, $gasType, $fuelPrice, $fuelCost)
     {
 
         $stmt = $this->con->prepare("INSERT INTO `fuel_cost`(`ID`, `Add_By`, `Vehicle_No`, `Date`, `Fuel_Type`, `Fuel_Price`, `Cost`) VALUES (NULL, ?, ?, ?, ?, ?, ?);");
         $stmt->bind_param("ssssss", $addedBy, $vehicleNumber, $date, $gasType, $fuelPrice, $fuelCost);
+
+        if ($stmt->execute()) {
+            // fuel cost created
+            return 0;
+        } else {
+            // some error
+            return 1;
+        }
+    }
+
+    // adding new monthly fuel cost
+    public function createMonthlyFuelCost($vehicleNumber, $selectedMonth, $startReadingValue, $endReadingValue, $totalDistance, $totalCost, $totalLiters, $average)
+    {
+
+        $stmt = $this->con->prepare("INSERT INTO `monthly_countdown`(`ID`, `Vehicle_No`, `Date`, `Start_of_Month`, `End_of_Month`, `Total Km`, `Amount`, `Liters`, `Average`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?);");
+        $stmt->bind_param("ssssssss", $vehicleNumber, $selectedMonth, $startReadingValue, $endReadingValue, $totalDistance, $totalCost, $totalLiters, $average);
 
         if ($stmt->execute()) {
             // fuel cost created

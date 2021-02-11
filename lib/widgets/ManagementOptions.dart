@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:vehicle_management_system/screens/AddDailyCost.dart';
+import 'package:vehicle_management_system/screens/AddMonthlyCost.dart';
 import 'package:vehicle_management_system/screens/AddRepair.dart';
 import 'package:vehicle_management_system/screens/AddVehicle.dart';
 import 'package:vehicle_management_system/screens/AllDrivers.dart';
@@ -21,7 +22,7 @@ class _ManagementOptionsState extends State<ManagementOptions> {
       children: <Widget>[
         ListTile(
           leading: Icon(MaterialCommunityIcons.car_multiple),
-          title: Text("New Vehicle"),
+          title: Text("Add Vehicle"),
           onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (_) => AddVehicle()));
@@ -30,7 +31,7 @@ class _ManagementOptionsState extends State<ManagementOptions> {
         Divider(),
         ListTile(
           leading: Icon(Icons.people),
-          title: Text("New Driver"),
+          title: Text("Add Driver"),
           onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (_) => AllDrivers()));
@@ -39,7 +40,7 @@ class _ManagementOptionsState extends State<ManagementOptions> {
         Divider(),
         ListTile(
           leading: Icon(MaterialIcons.build),
-          title: Text("New Repair"),
+          title: Text("Add Repair"),
           onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (_) => AddRepair()));
@@ -48,10 +49,19 @@ class _ManagementOptionsState extends State<ManagementOptions> {
         Divider(),
         ListTile(
           leading: Icon(Icons.monetization_on),
-          title: Text("New Fuel Cost"),
+          title: Text("Add Daily Fuel Cost"),
           onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (_) => AddDailyCost()));
+          },
+        ),
+        Divider(),
+        ListTile(
+          leading: Icon(Icons.insert_chart),
+          title: Text("Add Monthly Fuel Cost"),
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => AddMonthlyCost()));
           },
         ),
         Divider(),

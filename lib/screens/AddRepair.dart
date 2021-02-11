@@ -303,11 +303,6 @@ class _AddRepairState extends State<AddRepair> {
                                   _repairDetailsController.clear();
                                   _repairCostController.updateValue(0.00);
                                 });
-
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => AllRepairs()));
                               }
                             });
                           }

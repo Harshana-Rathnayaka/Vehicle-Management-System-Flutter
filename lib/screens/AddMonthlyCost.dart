@@ -549,10 +549,6 @@ class _AddMonthlyCostState extends State<AddMonthlyCost> {
                                     _totalLitersController.clear();
                                     _averageController.clear();
                                   });
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => MonthlyFuelCost()));
                                 });
                               }
                             });

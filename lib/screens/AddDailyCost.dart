@@ -43,12 +43,7 @@ class _AddDailyCostState extends State<AddDailyCost> {
   @override
   void initState() {
     _getVehicleNumbers();
-    _getPrices().then((value) {
-      setState(() {
-        _fuelPriceController.text =
-            currencyFormat.format(double.parse(_fuelPrices['petrolPrice']));
-      });
-    });
+    _getPrices();
     super.initState();
   }
 
@@ -448,13 +443,10 @@ class _AddDailyCostState extends State<AddDailyCost> {
                                     toastLength: Toast.LENGTH_LONG);
 
                                 setState(() {
+                                  _fuelTypeController.clear();
+                                  _fuelPriceController.clear();
                                   _fuelCostController.updateValue(0.00);
                                 });
-
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => DailyFuelCost()));
                               }
                             });
                           }

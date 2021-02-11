@@ -137,7 +137,7 @@ class _AddDailyCostState extends State<AddDailyCost> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: Text('Add Fuel Cost'),
+        title: Text('Add Daily Fuel Cost'),
       ),
       body: _loading
           ? Center(child: CircularProgressIndicator())

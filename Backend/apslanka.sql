@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 11, 2021 at 09:38 PM
+-- Generation Time: Feb 18, 2021 at 06:24 PM
 -- Server version: 10.5.4-MariaDB
 -- PHP Version: 7.1.33
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `apslanka`
 --
+CREATE DATABASE IF NOT EXISTS `apslanka` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `apslanka`;
 
 -- --------------------------------------------------------
 
@@ -41,11 +43,10 @@ CREATE TABLE IF NOT EXISTS `drivers_reg` (
 --
 
 INSERT INTO `drivers_reg` (`ID`, `Name`, `Licen_No`, `Contact`) VALUES
-(11, 'Test Driver', '55264848', '1236458795'),
+(11, 'Test Driver 1', '56255625', '0112772772'),
 (12, 'Test Driver 2', '154248454', '2348472485'),
-(13, 'Test User 3', '074638263', '0780454945'),
-(14, 'Test Driver 4', '526362352', '0776455248'),
-(15, 'Test Driver 5', '0473636273', '0715264845');
+(13, 'Test Driver 3', '074638263', '0780454945'),
+(14, 'Test Driver 4', '526362352', '0776455248');
 
 -- --------------------------------------------------------
 
@@ -145,7 +146,6 @@ INSERT INTO `login` (`ID`, `User_Name`, `Password`, `Email`, `Issuper`) VALUES
 (22, 'ggg', 'fgh', 'vhh', 0),
 (23, 'hff', 'ffg', 'fhh', 0),
 (24, 'ghg', 'zfh', 'zght@hsg.co', 0),
-(25, 'hash', '123', 'gas@ad.c', 0),
 (26, 'test', '123', 'test@jmail.com', 0),
 (27, 'test2', '123', 'test2@gmail.com', 0);
 
@@ -206,9 +206,8 @@ CREATE TABLE IF NOT EXISTS `running_repair` (
 --
 
 INSERT INTO `running_repair` (`ID`, `Vehicle_No`, `Repair`, `Date`, `Cost(Rs)`) VALUES
-(1, 'KT 8603', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu', '13/02/2021', '5000.00'),
-(2, 'TEST-02', 'Final testing', '12/02/2021', '5000.00'),
-(3, 'TEST-02', 'One last test', '15/02/2021', '4500.00');
+(1, 'KT 8603', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu', '25/02/2021', '5000.00'),
+(2, 'TEST-02', 'Final testing update testing', '25/02/2021', '5000.00');
 
 -- --------------------------------------------------------
 
@@ -256,12 +255,11 @@ CREATE TABLE IF NOT EXISTS `vehicletable` (
 --
 
 INSERT INTO `vehicletable` (`ID`, `Vehicle_No`, `Vehicle_Type`, `Capacity`, `Fuel_Type`, `Chassis_Number`, `Engine_Number`, `Ownership`, `Maintenance`) VALUES
-(25, 'BDM0944', 'Bike', '149.5CC', 'Petrol', '12312', '1245', 'Own', 'Active'),
-(26, 'KT 8603', 'Van', '1300C', 'Petrol', '213215151', '51311', 'Own', 'Active'),
-(27, 'TEST-01', 'Car', '1500 CC', 'Petrol', '5524128', '6325', 'Own', 'Active'),
+(25, 'BDM0944', 'Bike', '150CC', 'Petrol', '12312', '12345', 'Own', 'Active'),
+(26, 'KT 8604', 'Van', '1300CC', 'Diesel', '21321', '51311', 'Own', 'Active'),
+(27, 'TEST-01', 'Car', '1500 CC', 'Petrol', '5524', '6325', 'Own', 'Active'),
 (28, 'DC1349', 'Van', '200 CC', 'Petrol', '5427318', '2543', 'Own', 'Active'),
-(29, 'TEST-02', 'Bike', '150 CC', 'Diesel', '645865', '1234', 'Own', 'Active'),
-(30, 'TEST-03', 'Van', '250CC', 'Diesel', '84845', '364645', 'Rent', 'Inactive');
+(29, 'TEST-02', 'Bike', '150 CC', 'Diesel', '645865', '1234', 'Own', 'Active');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

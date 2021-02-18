@@ -55,6 +55,25 @@ class _AllVehiclesState extends State<AllVehicles> {
     return response;
   }
 
+  // deleting a vehicle
+  Future<http.Response> _deleteVehicle(vehicleId) async {
+    setState(() {
+      _loading = true;
+    });
+
+    final http.Response response = await Network().postData({
+      'id': vehicleId.toString(),
+    }, '/deleteVehicle.php');
+
+    print('response ---- ${jsonDecode(response.body)}');
+
+    setState(() {
+      _loading = false;
+    });
+
+    return response;
+  }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -259,43 +278,42 @@ class _AllVehiclesState extends State<AllVehicles> {
                                                                             index]),
                                                           ));
                                                     });
-                                                  }
-                                                  // else {
-                                                  //   _deleteDriver(
-                                                  //           _drivers[index]
-                                                  //               ['ID'])
-                                                  //       .then((value) {
-                                                  //     var res = jsonDecode(
-                                                  //         value.body);
+                                                  } else {
+                                                    _deleteVehicle(
+                                                            _vehicleList[index]
+                                                                ['ID'])
+                                                        .then((value) {
+                                                      var res = jsonDecode(
+                                                          value.body);
 
-                                                  //     if (res['error'] ==
-                                                  //         true) {
-                                                  //       Fluttertoast.showToast(
-                                                  //           msg: res['message'],
-                                                  //           backgroundColor:
-                                                  //               Colors.red[600],
-                                                  //           textColor:
-                                                  //               Colors.white,
-                                                  //           toastLength: Toast
-                                                  //               .LENGTH_LONG);
-                                                  //     } else {
-                                                  //       Fluttertoast.showToast(
-                                                  //               msg: res[
-                                                  //                   'message'],
-                                                  //               backgroundColor:
-                                                  //                   Colors
-                                                  //                       .green,
-                                                  //               textColor:
-                                                  //                   Colors
-                                                  //                       .white,
-                                                  //               toastLength: Toast
-                                                  //                   .LENGTH_LONG)
-                                                  //           .then((value) {
-                                                  //         _getVehicles();
-                                                  //       });
-                                                  //     }
-                                                  //   });
-                                                  // }
+                                                      if (res['error'] ==
+                                                          true) {
+                                                        Fluttertoast.showToast(
+                                                            msg: res['message'],
+                                                            backgroundColor:
+                                                                Colors.red[600],
+                                                            textColor:
+                                                                Colors.white,
+                                                            toastLength: Toast
+                                                                .LENGTH_LONG);
+                                                      } else {
+                                                        Fluttertoast.showToast(
+                                                                msg: res[
+                                                                    'message'],
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .green,
+                                                                textColor:
+                                                                    Colors
+                                                                        .white,
+                                                                toastLength: Toast
+                                                                    .LENGTH_LONG)
+                                                            .then((value) {
+                                                          _getVehicles();
+                                                        });
+                                                      }
+                                                    });
+                                                  }
                                                 },
                                               );
                                             }).toList(),

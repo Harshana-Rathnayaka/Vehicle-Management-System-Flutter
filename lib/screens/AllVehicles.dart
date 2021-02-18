@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vehicle_management_system/constants/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:vehicle_management_system/screens/AddVehicle.dart';
+import 'package:vehicle_management_system/screens/UpdateVehicle.dart';
 import 'package:vehicle_management_system/services/NetworkHelper.dart';
 
 class AllVehicles extends StatefulWidget {
@@ -17,6 +19,7 @@ class _AllVehiclesState extends State<AllVehicles> {
   List _vehicleList;
   double width;
   double height;
+  String dropdownValue = 'Update';
 
   @override
   void initState() {
@@ -63,6 +66,7 @@ class _AllVehiclesState extends State<AllVehicles> {
         backgroundColor: primaryColor,
         title: Text('Vehicles'),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -213,7 +217,92 @@ class _AllVehiclesState extends State<AllVehicles> {
                                           ),
                                         ]),
                                       ],
-                                    )
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Expanded(
+                                          child: DropdownButton<String>(
+                                            isDense: true,
+                                            isExpanded: true,
+                                            icon: Icon(
+                                              Icons.more_horiz,
+                                            ),
+                                            underline: Container(
+                                              height: 0,
+                                              color: primaryColor,
+                                            ),
+                                            onChanged: (String newValue) {
+                                              setState(() {
+                                                dropdownValue = newValue;
+                                              });
+                                            },
+                                            items: <String>['Update', 'Delete']
+                                                .map<DropdownMenuItem<String>>(
+                                                    (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(value),
+                                                onTap: () {
+                                                  print(value);
+
+                                                  if (value == 'Update') {
+                                                    Future.delayed(
+                                                        Duration.zero, () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (_) =>
+                                                                UpdateVehicle(
+                                                                    vehicle:
+                                                                        _vehicleList[
+                                                                            index]),
+                                                          ));
+                                                    });
+                                                  }
+                                                  // else {
+                                                  //   _deleteDriver(
+                                                  //           _drivers[index]
+                                                  //               ['ID'])
+                                                  //       .then((value) {
+                                                  //     var res = jsonDecode(
+                                                  //         value.body);
+
+                                                  //     if (res['error'] ==
+                                                  //         true) {
+                                                  //       Fluttertoast.showToast(
+                                                  //           msg: res['message'],
+                                                  //           backgroundColor:
+                                                  //               Colors.red[600],
+                                                  //           textColor:
+                                                  //               Colors.white,
+                                                  //           toastLength: Toast
+                                                  //               .LENGTH_LONG);
+                                                  //     } else {
+                                                  //       Fluttertoast.showToast(
+                                                  //               msg: res[
+                                                  //                   'message'],
+                                                  //               backgroundColor:
+                                                  //                   Colors
+                                                  //                       .green,
+                                                  //               textColor:
+                                                  //                   Colors
+                                                  //                       .white,
+                                                  //               toastLength: Toast
+                                                  //                   .LENGTH_LONG)
+                                                  //           .then((value) {
+                                                  //         _getVehicles();
+                                                  //       });
+                                                  //     }
+                                                  //   });
+                                                  // }
+                                                },
+                                              );
+                                            }).toList(),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),

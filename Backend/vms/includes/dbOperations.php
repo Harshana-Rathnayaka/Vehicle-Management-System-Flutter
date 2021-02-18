@@ -247,6 +247,21 @@ class DbOperations
         }
     }
 
+    // updating vehicle details
+    public function updateVehicles($vehicle_id, $vehicleNumber, $vehicleType, $capacity, $gasType, $chassisNumber, $engineNumber, $ownership, $maintenance)
+    {
+        $stmt = $this->con->prepare("UPDATE `vehicletable` SET `Vehicle_No` = ?, `Vehicle_Type` = ?, `Capacity` = ?, `Fuel_Type` = ?, `Chassis_Number` = ?, `Engine_Number` = ?, `Ownership` = ?, `Maintenance` = ? WHERE `ID` = ?");
+        $stmt->bind_param("ssssssssi", $vehicleNumber, $vehicleType, $capacity, $gasType, $chassisNumber, $engineNumber, $ownership, $maintenance, $vehicle_id);
+
+        if ($stmt->execute()) {
+            // vehicle updated
+            return 0;
+        } else {
+            // some error
+            return 1;
+        }
+    }
+
     /* CRUD  -> D -> DELETE */
 
     // delete driver
@@ -272,6 +287,21 @@ class DbOperations
 
         if ($stmt->execute()) {
             // repair deleted
+            return 0;
+        } else {
+            // some error
+            return 1;
+        }
+    }
+
+    // delete vehicle
+    public function deleteVehicle($vehicle_id)
+    {
+        $stmt = $this->con->prepare("DELETE FROM `vehicletable` WHERE `ID` = ?");
+        $stmt->bind_param("i", $vehicle_id);
+
+        if ($stmt->execute()) {
+            // vehicle deleted
             return 0;
         } else {
             // some error

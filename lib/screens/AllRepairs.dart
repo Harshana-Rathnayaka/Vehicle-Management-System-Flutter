@@ -95,6 +95,25 @@ class _AllRepairsState extends State<AllRepairs> {
     return response;
   }
 
+  // deleting a repair
+  Future<http.Response> _deleteRepair(repairId) async {
+    setState(() {
+      _loading = true;
+    });
+
+    final http.Response response = await Network().postData({
+      'id': repairId.toString(),
+    }, '/deleteRepair.php');
+
+    print('response ---- ${jsonDecode(response.body)}');
+
+    setState(() {
+      _loading = false;
+    });
+
+    return response;
+  }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -225,43 +244,44 @@ class _AllRepairsState extends State<AllRepairs> {
                                                             context,
                                                             _repairs[index]);
                                                       });
-                                                    }
-                                                    // } else {
-                                                    //   _deleteDriver(
-                                                    //           _repairs[index]
-                                                    //               ['ID'])
-                                                    //       .then((value) {
-                                                    //     var res = jsonDecode(
-                                                    //         value.body);
+                                                    } else {
+                                                      _deleteRepair(
+                                                              _repairs[index]
+                                                                  ['ID'])
+                                                          .then((value) {
+                                                        var res = jsonDecode(
+                                                            value.body);
 
-                                                    //     if (res['error'] ==
-                                                    //         true) {
-                                                    //       Fluttertoast.showToast(
-                                                    //           msg: res['message'],
-                                                    //           backgroundColor:
-                                                    //               Colors.red[600],
-                                                    //           textColor:
-                                                    //               Colors.white,
-                                                    //           toastLength: Toast
-                                                    //               .LENGTH_LONG);
-                                                    //     } else {
-                                                    //       Fluttertoast.showToast(
-                                                    //               msg: res[
-                                                    //                   'message'],
-                                                    //               backgroundColor:
-                                                    //                   Colors
-                                                    //                       .green,
-                                                    //               textColor:
-                                                    //                   Colors
-                                                    //                       .white,
-                                                    //               toastLength: Toast
-                                                    //                   .LENGTH_LONG)
-                                                    //           .then((value) {
-                                                    //         _getRepairs();
-                                                    //       });
-                                                    //     }
-                                                    //   });
-                                                    // }
+                                                        if (res['error'] ==
+                                                            true) {
+                                                          Fluttertoast.showToast(
+                                                              msg: res[
+                                                                  'message'],
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .red[600],
+                                                              textColor:
+                                                                  Colors.white,
+                                                              toastLength: Toast
+                                                                  .LENGTH_LONG);
+                                                        } else {
+                                                          Fluttertoast.showToast(
+                                                                  msg: res[
+                                                                      'message'],
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .green,
+                                                                  textColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  toastLength: Toast
+                                                                      .LENGTH_LONG)
+                                                              .then((value) {
+                                                            _getRepairs();
+                                                          });
+                                                        }
+                                                      });
+                                                    }
                                                   },
                                                 );
                                               }).toList(),

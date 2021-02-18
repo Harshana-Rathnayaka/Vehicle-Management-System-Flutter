@@ -23,6 +23,9 @@ class _AllDriversState extends State<AllDrivers> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _licenseController = TextEditingController();
   TextEditingController _contactController = TextEditingController();
+  TextEditingController _updateNameController = TextEditingController();
+  TextEditingController _updateLicenseController = TextEditingController();
+  TextEditingController _updateContactController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
@@ -74,6 +77,28 @@ class _AllDriversState extends State<AllDrivers> {
       'licenseNumber': _licenseController.text,
       'contact': _contactController.text
     }, '/addNewDriver.php');
+
+    print('response ---- ${jsonDecode(response.body)}');
+
+    setState(() {
+      _loading = false;
+    });
+
+    return response;
+  }
+
+  // updating driver details
+  Future<http.Response> _updateDriver(driverId) async {
+    setState(() {
+      _loading = true;
+    });
+
+    final http.Response response = await Network().postData({
+      'id': driverId.toString(),
+      'name': _updateNameController.text,
+      'licenseNumber': _updateLicenseController.text,
+      'contact': _updateContactController.text
+    }, '/updateDrivers.php');
 
     print('response ---- ${jsonDecode(response.body)}');
 
@@ -208,9 +233,12 @@ class _AllDriversState extends State<AllDrivers> {
                                                   print(value);
 
                                                   if (value == 'Update') {
-                                                    _updateDriverDetailsDialog(
-                                                        context,
-                                                        _drivers[index]);
+                                                    Future.delayed(
+                                                        Duration.zero, () {
+                                                      _updateDriverDetailsDialog(
+                                                          context,
+                                                          _drivers[index]);
+                                                    });
                                                   } else {
                                                     _deleteDriver(
                                                             _drivers[index]
@@ -277,7 +305,6 @@ class _AllDriversState extends State<AllDrivers> {
             ),
             backgroundColor: Colors.transparent,
             child: Container(
-              height: 370,
               decoration: BoxDecoration(
                 color: backgroundColor,
                 shape: BoxShape.rectangle,
@@ -408,6 +435,11 @@ class _AllDriversState extends State<AllDrivers> {
 
   // updating driver details dialog
   Future<Widget> _updateDriverDetailsDialog(context, driver) {
+    print(driver);
+
+    _updateNameController.text = driver['Name'];
+    _updateLicenseController.text = driver['Licen_No'];
+    _updateContactController.text = driver['Contact'];
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -417,7 +449,6 @@ class _AllDriversState extends State<AllDrivers> {
             ),
             backgroundColor: Colors.transparent,
             child: Container(
-              height: 370,
               decoration: BoxDecoration(
                 color: backgroundColor,
                 shape: BoxShape.rectangle,
@@ -439,7 +470,7 @@ class _AllDriversState extends State<AllDrivers> {
                     height: 70,
                     width: double.infinity,
                     alignment: Alignment.center,
-                    child: Text('Add Driver',
+                    child: Text('Update Driver Details',
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 18,
@@ -458,7 +489,7 @@ class _AllDriversState extends State<AllDrivers> {
                           MyTextField(
                             hint: 'Full Name',
                             icon: MaterialCommunityIcons.account,
-                            controller: _nameController,
+                            controller: _updateNameController,
                             validation: (val) {
                               if (val.isEmpty) {
                                 return 'Name is required';
@@ -469,7 +500,7 @@ class _AllDriversState extends State<AllDrivers> {
                           MyTextField(
                             hint: 'License Number',
                             icon: MaterialCommunityIcons.card_text,
-                            controller: _licenseController,
+                            controller: _updateLicenseController,
                             validation: (val) {
                               if (val.isEmpty) {
                                 return 'License number is required';
@@ -482,7 +513,7 @@ class _AllDriversState extends State<AllDrivers> {
                             hint: 'Contact Number',
                             icon: MaterialCommunityIcons.contact_phone,
                             isNumber: true,
-                            controller: _contactController,
+                            controller: _updateContactController,
                             validation: (val) {
                               if (val.isEmpty) {
                                 return 'Contact number is required';
@@ -493,7 +524,7 @@ class _AllDriversState extends State<AllDrivers> {
                           GestureDetector(
                             onTap: () {
                               if (_formKey.currentState.validate()) {
-                                _addDriver().then((value) {
+                                _updateDriver(driver['ID']).then((value) {
                                   var res = jsonDecode(value.body);
 
                                   if (res['error'] == true) {
@@ -504,9 +535,9 @@ class _AllDriversState extends State<AllDrivers> {
                                         toastLength: Toast.LENGTH_LONG);
                                   } else {
                                     setState(() {
-                                      _nameController.clear();
-                                      _licenseController.clear();
-                                      _contactController.clear();
+                                      _updateNameController.clear();
+                                      _updateLicenseController.clear();
+                                      _updateContactController.clear();
                                     });
                                     Fluttertoast.showToast(
                                             msg: res['message'],

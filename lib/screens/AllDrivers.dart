@@ -18,6 +18,7 @@ class _AllDriversState extends State<AllDrivers> {
   List _drivers;
   double width;
   double height;
+  String dropdownValue = 'Update';
 
   TextEditingController _nameController = TextEditingController();
   TextEditingController _licenseController = TextEditingController();
@@ -83,6 +84,25 @@ class _AllDriversState extends State<AllDrivers> {
     return response;
   }
 
+  // deleting a driver
+  Future<http.Response> _deleteDriver(driverId) async {
+    setState(() {
+      _loading = true;
+    });
+
+    final http.Response response = await Network().postData({
+      'id': driverId.toString(),
+    }, '/deleteDriver.php');
+
+    print('response ---- ${jsonDecode(response.body)}');
+
+    setState(() {
+      _loading = false;
+    });
+
+    return response;
+  }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -94,6 +114,7 @@ class _AllDriversState extends State<AllDrivers> {
         backgroundColor: primaryColor,
         title: Text('Drivers'),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _addNewDriverDialog(context);
@@ -157,7 +178,82 @@ class _AllDriversState extends State<AllDrivers> {
                                           ),
                                         ]),
                                       ],
-                                    )
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Expanded(
+                                          child: DropdownButton<String>(
+                                            isDense: true,
+                                            isExpanded: true,
+                                            icon: Icon(
+                                              Icons.more_horiz,
+                                            ),
+                                            underline: Container(
+                                              height: 0,
+                                              color: primaryColor,
+                                            ),
+                                            onChanged: (String newValue) {
+                                              setState(() {
+                                                dropdownValue = newValue;
+                                              });
+                                            },
+                                            items: <String>['Update', 'Delete']
+                                                .map<DropdownMenuItem<String>>(
+                                                    (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(value),
+                                                onTap: () {
+                                                  print(value);
+
+                                                  if (value == 'Update') {
+                                                    _updateDriverDetailsDialog(
+                                                        context,
+                                                        _drivers[index]);
+                                                  } else {
+                                                    _deleteDriver(
+                                                            _drivers[index]
+                                                                ['ID'])
+                                                        .then((value) {
+                                                      var res = jsonDecode(
+                                                          value.body);
+
+                                                      if (res['error'] ==
+                                                          true) {
+                                                        Fluttertoast.showToast(
+                                                            msg: res['message'],
+                                                            backgroundColor:
+                                                                Colors.red[600],
+                                                            textColor:
+                                                                Colors.white,
+                                                            toastLength: Toast
+                                                                .LENGTH_LONG);
+                                                      } else {
+                                                        Fluttertoast.showToast(
+                                                                msg: res[
+                                                                    'message'],
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .green,
+                                                                textColor:
+                                                                    Colors
+                                                                        .white,
+                                                                toastLength: Toast
+                                                                    .LENGTH_LONG)
+                                                            .then((value) {
+                                                          _getDrivers();
+                                                        });
+                                                      }
+                                                    });
+                                                  }
+                                                },
+                                              );
+                                            }).toList(),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
@@ -172,6 +268,146 @@ class _AllDriversState extends State<AllDrivers> {
 
 // adding new driver dialog
   Future<Widget> _addNewDriverDialog(context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            backgroundColor: Colors.transparent,
+            child: Container(
+              height: 370,
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              width: double.infinity,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16.0),
+                        topRight: Radius.circular(16.0),
+                      ),
+                    ),
+                    height: 70,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Text('Add Driver',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                            color: Colors.white),
+                        textAlign: TextAlign.center),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          MyTextField(
+                            hint: 'Full Name',
+                            icon: MaterialCommunityIcons.account,
+                            controller: _nameController,
+                            validation: (val) {
+                              if (val.isEmpty) {
+                                return 'Name is required';
+                              }
+                              return null;
+                            },
+                          ),
+                          MyTextField(
+                            hint: 'License Number',
+                            icon: MaterialCommunityIcons.card_text,
+                            controller: _licenseController,
+                            validation: (val) {
+                              if (val.isEmpty) {
+                                return 'License number is required';
+                              }
+                              return null;
+                            },
+                          ),
+                          MyTextField(
+                            maxLength: 10,
+                            hint: 'Contact Number',
+                            icon: MaterialCommunityIcons.contact_phone,
+                            isNumber: true,
+                            controller: _contactController,
+                            validation: (val) {
+                              if (val.isEmpty) {
+                                return 'Contact number is required';
+                              }
+                              return null;
+                            },
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (_formKey.currentState.validate()) {
+                                _addDriver().then((value) {
+                                  var res = jsonDecode(value.body);
+
+                                  if (res['error'] == true) {
+                                    Fluttertoast.showToast(
+                                        msg: res['message'],
+                                        backgroundColor: Colors.red[600],
+                                        textColor: Colors.white,
+                                        toastLength: Toast.LENGTH_LONG);
+                                  } else {
+                                    setState(() {
+                                      _nameController.clear();
+                                      _licenseController.clear();
+                                      _contactController.clear();
+                                    });
+                                    Fluttertoast.showToast(
+                                            msg: res['message'],
+                                            backgroundColor: Colors.green,
+                                            textColor: Colors.white,
+                                            toastLength: Toast.LENGTH_LONG)
+                                        .then((value) {
+                                      Navigator.pop(context);
+                                      _getDrivers();
+                                    });
+                                  }
+                                });
+                              }
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 30.0,
+                              width: double.infinity,
+                              child: Text(
+                                'SAVE',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  // updating driver details dialog
+  Future<Widget> _updateDriverDetailsDialog(context, driver) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
